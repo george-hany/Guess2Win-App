@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BaseFiles</string>
+
+    <!--App Error Message-->
+    <string name="api_retry_error" translatable="false">Please retry!</string>
+    <string name="api_default_error" translatable="false">Something wrong happened!</string>
+    <string name="some_error" translatable="false">Some Error Occurred!</string>
+    <string name="connection_error" translatable="false">Internet connection lost!</string>
+    <string name="wrong_data">Wrong Data Has Entered</string>
+    <string name="account_data_not_found">Account Data Not Found</string>
+
+</resources>

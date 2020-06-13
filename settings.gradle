@@ -1,0 +1,8 @@
+rootProject.name='Src'
+include ':app'
+include ':base'
+include ':data'
+include ':utils'
+include ':network'
+include ':prefrence'
+include ':resources'
