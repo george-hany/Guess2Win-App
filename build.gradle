@@ -5,13 +5,14 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 buildscript {
     ext{
         ext.kotlin_version = '1.3.70'
-        ktlint_enabled = true
+        ktlint_enabled = false
         koin_version = '2.0.1'
         nav_version = "2.3.0-alpha06"
         version_room_coroutine = "2.1.0-alpha04"
         room_version = "2.2.5"
         retrofit2_version = "2.5.0"
         kotlin_version = '1.3.72'
+        arch_version = "2.1.0"
     }
     repositories {
         maven {
@@ -19,6 +20,7 @@ buildscript {
         }
         google()
         jcenter()
+        mavenCentral()
 
     }
     dependencies {

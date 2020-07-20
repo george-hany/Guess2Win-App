@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="splash" translatable="false">myApp://fragmentSplash</string>
+    <string name="chooseLanguage" translatable="false">myApp://fragmentChooseLanguage</string>
+    <string name="chooseTheme" translatable="false">myApp://fragmentChooseTheme</string>
+    <string name="login" translatable="false">myApp://fragmentLogin</string>
+    <string name="board" translatable="false">myApp://fragmentBoard</string>
+</resources>

@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.core.utils" />
+    package="com.core.utils">
+
+    <application>
+        <service android:name=".InterstitialAdService" />
+    </application>
+</manifest>
