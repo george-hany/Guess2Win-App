@@ -18,10 +18,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass.
  */
-class ExtraPointsFragment : BaseFragment<FragmentExtraPointsBinding, ExtraPointsViewModel>() {
+class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPointsViewModel>() {
     val extraPointsViewModel: ExtraPointsViewModel by viewModel()
     private lateinit var mRewardedVideoAd: RewardedVideoAd
-
+    var callBack: CallBack? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isSubFragment = true
@@ -55,13 +55,16 @@ class ExtraPointsFragment : BaseFragment<FragmentExtraPointsBinding, ExtraPoints
         mRewardedVideoAd.rewardedVideoAdListener = object : RewardedVideoAdListener {
             override fun onRewardedVideoAdClosed() {
                 loadRewardedVideoAd()
+                callBack?.onVideoAdClosed()
             }
 
             override fun onRewardedVideoAdLeftApplication() {}
 
             override fun onRewardedVideoAdLoaded() {}
 
-            override fun onRewardedVideoAdOpened() {}
+            override fun onRewardedVideoAdOpened() {
+                callBack?.onVideoAdOpened()
+            }
 
             override fun onRewardedVideoCompleted() {
                 activity?.toast("rewarded successfully")
@@ -95,5 +98,18 @@ class ExtraPointsFragment : BaseFragment<FragmentExtraPointsBinding, ExtraPoints
     override fun onDestroy() {
         super.onDestroy()
         mRewardedVideoAd.destroy(context)
+    }
+
+    companion object {
+        fun newInstance(callBack: CallBack) = ExtraPointsFragment(callBack)
+    }
+
+    constructor(callBack: CallBack) : this() {
+        this.callBack = callBack
+    }
+
+    interface CallBack {
+        fun onVideoAdOpened()
+        fun onVideoAdClosed()
     }
 }

@@ -40,7 +40,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * A simple [Fragment] subclass.
  */
 class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
-    SettingsFragment.CallBack {
+    SettingsFragment.CallBack, ExtraPointsFragment.CallBack {
     private val boardViewModel: BoardViewModel by viewModel()
     private var positionSelected = 1
     private var activeFragment: Fragment? = null
@@ -150,7 +150,7 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
                     extraPointsFragment?.let {
                         replaceExistFragment(it)
                     } ?: kotlin.run {
-                        extraPointsFragment = ExtraPointsFragment()
+                        extraPointsFragment = ExtraPointsFragment.newInstance(this@BoardFragment)
                         replaceNewFragment(extraPointsFragment!!)
                     }
                 }
@@ -350,5 +350,13 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
         baseActivity?.recreate()
+    }
+
+    override fun onVideoAdOpened() {
+        interstitialAdManager.stopInterstitialAd()
+    }
+
+    override fun onVideoAdClosed() {
+        interstitialAdManager.startInterstitialAd()
     }
 }
