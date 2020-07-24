@@ -15,4 +15,5 @@
     <color name="duskLight_greyNight">#3c5772</color>
     <color name="dusk">#3c5772</color>
     <color name="greyLight_duskNight">#808080</color>
+    <color name="warmGrey">#858585</color>
 </resources>

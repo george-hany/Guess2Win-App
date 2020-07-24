@@ -42,4 +42,6 @@
     <string name="prizes">الجوائز</string>
     <string name="night_mood">الوضع الليلي</string>
     <string name="day_mood">الوضع الصباحي</string>
-</resources>
+    <string name="Invalid_Phone_Number">رقم الهاتف غير صحيح</string>
+    <string name="phone">الهاتف</string>
+    <string name="phone_number">رقم الهاتف</string></resources>

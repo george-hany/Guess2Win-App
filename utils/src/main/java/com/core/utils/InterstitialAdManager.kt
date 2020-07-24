@@ -50,7 +50,6 @@ class InterstitialAdManager(var context: Context?) {
                     it.show()
                 } else {
                     loadInterstitialAd()
-                    startInterstitialAd()
                 }
             }
         }

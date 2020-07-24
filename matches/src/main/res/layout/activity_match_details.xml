@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="Etwak3"
+                android:text="Etwk3"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintLeft_toRightOf="@id/backArrow"

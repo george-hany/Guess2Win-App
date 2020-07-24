@@ -35,7 +35,7 @@
     <string name="if_you_have_problems_you_can_visit_our_facebook_page_any_time">If you have problems, you can visit our facebook page any time.</string>
     <string name="visit_our_page_on_facebook">Visit our Page On Facebook</string>
     <string name="extra_points">Extra Points</string>
-    <string name="ary_you_want_reward_you_can_get_more_points_by_watching_a_video">Ary you want reward? you can get more points by watching a video</string>
+    <string name="ary_you_want_reward_you_can_get_more_points_by_watching_a_video">Are you want reward? you can get more points by watching a video</string>
     <string name="watch">Watch</string>
     <string name="no_matches_found">no matches found</string>
     <string name="no_leagues_found">no leagues found</string>
@@ -43,4 +43,7 @@
     <string name="prizes">Prizes</string>
     <string name="night_mood">Night Mood</string>
     <string name="day_mood">Day Mood</string>
+    <string name="Invalid_Phone_Number">Invalid Phone Number</string>
+    <string name="phone">Phone</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

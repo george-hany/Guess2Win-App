@@ -9,6 +9,8 @@ import com.core.data.model.matchDetails.MatchExpectationRequest
 import com.core.data.model.matchDetails.MatchExpectationResponse
 import com.core.data.model.matches.MatchesResponseModel
 import com.core.data.model.prizes.PrizesResponse
+import com.core.data.model.profile.ChangePhoneRequest
+import com.core.data.model.profile.ChangePhoneResponse
 import com.core.data.model.rank.RankResponseModel
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -45,4 +47,7 @@ interface ApisHelper {
 
     @GET("")
     fun getPrizes(): Deferred<Response<PrizesResponse>>
+
+    @POST("")
+    fun changePhone(changePhoneRequest: ChangePhoneRequest): Deferred<Response<ChangePhoneResponse>>
 }
