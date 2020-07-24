@@ -56,6 +56,7 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
     private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var interstitialAdManager: InterstitialAdManager
     override fun onCreate(savedInstanceState: Bundle?) {
+        setupAppEnvironment()
         super.onCreate(savedInstanceState)
         setupInterstitialAd()
         MobileAds.initialize(context, ADMOB_APP_ID)
@@ -358,5 +359,17 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
 
     override fun onVideoAdClosed() {
         interstitialAdManager.startInterstitialAd()
+    }
+
+    private fun setupAppEnvironment() {
+        if (!boardViewModel.getTheme().isNullOrEmpty()) {
+            if (boardViewModel.getTheme() == AppConstant.NIGHT) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }

@@ -17,4 +17,6 @@ class BoardViewModel(var boardRepo: BoardRepo) : BaseViewModel<BoardRepo>(boardR
     fun saveTheme(themeType: String) {
         boardRepo.saveThemeTypeToSharedPref(themeType)
     }
+
+    fun getTheme() = boardRepo.getAppThemeFromSharedPref()
 }
