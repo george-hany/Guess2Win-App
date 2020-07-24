@@ -45,7 +45,7 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
 
     private fun setupRanksRecycler() {
         viewDataBinding.run {
-            adapter = RanksListAdapter(arrayListOf())
+            adapter = RanksListAdapter(arrayListOf(), rankViewModel.userId)
             ranksRecycler.addItemDecoration(SpacingItemDecoration(0, 0, 20, 20))
         }
     }

@@ -13,6 +13,7 @@ class RankViewModel(var rankRepo: RankRepo) : BaseViewModel<RankRepo>(rankRepo) 
     var rankNetworkType = ""
     val rankMediatorLiveData = MediatorLiveData<Any>()
     val ranksUIListLiveData = MutableLiveData<List<RanksItemUIModel>>()
+    val userId = rankRepo.getLoginResponseFromSharedPref().id
 
     fun getRanks() {
         val requestRanks = rankRepo.requestRanksList(rankNetworkType, selectedNum)

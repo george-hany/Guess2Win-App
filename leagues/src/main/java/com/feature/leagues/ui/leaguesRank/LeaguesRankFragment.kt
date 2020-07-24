@@ -56,7 +56,7 @@ class LeaguesRankFragment : BaseFragment<FragmentLeaguesRankBinding, LeaguesRank
 
     private fun setupRanksRecyclerEnvironment() {
         viewDataBinding.run {
-            adapter = RankListAdapter(arrayListOf())
+            adapter = RankListAdapter(arrayListOf(),leaguesRankViewModel.userId)
             rankRecycler.addItemDecoration(SpacingItemDecoration(0, 0, 20, 20))
         }
     }

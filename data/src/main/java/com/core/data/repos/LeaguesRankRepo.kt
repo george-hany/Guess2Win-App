@@ -3,7 +3,9 @@ package com.core.data.repos
 import androidx.lifecycle.LiveData
 import com.core.data.MainExceptions
 import com.core.data.base.BaseRepo
+import com.core.data.constant.SharedPrefKeys.Companion.LOGIN_DATA
 import com.core.data.model.leaguesRank.LeaguesRankResponseModel
+import com.core.data.model.login.LoginResponse
 import com.core.data.network.ApiFactory
 import com.core.data.network.NetworkBoundFileResource
 import com.core.network.NetworkFactoryInterface
@@ -40,4 +42,9 @@ class LeaguesRankRepo(
             override fun handleErrorResponseType(response: Response<LeaguesRankResponseModel>) {}
         }.asLiveData()
     }
+
+    fun getLoginResponseFromSharedPref(): LoginResponse = Gson().fromJson(
+        sharedPreference.getString(LOGIN_DATA),
+        object : TypeToken<LoginResponse>() {}.type
+    )
 }

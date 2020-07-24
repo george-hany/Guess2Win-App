@@ -4,10 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.core.base.BaseViewHolder
+import com.feature.rank.R
 import com.feature.rank.databinding.RankItemBinding
 import com.feature.rank.ui.rank.model.RanksItemUIModel
 
-class RanksListAdapter(var ranksList: ArrayList<RanksItemUIModel>) :
+class RanksListAdapter(
+    var ranksList: ArrayList<RanksItemUIModel>,
+    var userId: String?
+) :
     RecyclerView.Adapter<BaseViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return RanksListHolder(
@@ -29,6 +33,9 @@ class RanksListAdapter(var ranksList: ArrayList<RanksItemUIModel>) :
         BaseViewHolder(binding.root) {
         override fun onBind(position: Int) {
             binding.model = ranksList[position]
+            binding.index.text = "${position + 1}-"
+            if (userId == ranksList[position].id)
+                binding.container.setBackgroundResource(R.color.greyLight_duskNight)
         }
     }
 }
