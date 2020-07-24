@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 
 object AppConstant {
+    const val FACEBOOK_URL = "https://www.facebook.com/etwk3/"
+    const val FACEBOOK_PAGE_ID = "etwk3"
     const val InterstitialId = "ca-app-pub-3940256099942544/1033173712"
     const val ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713"
     const val RewarededVideoAd = "ca-app-pub-3940256099942544/5224354917"

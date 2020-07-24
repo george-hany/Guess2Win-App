@@ -2,6 +2,7 @@ package com.core.utils
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
@@ -67,5 +68,20 @@ object CommonUtils {
         calendar.time = myDate!!
         calendar.add(Calendar.DAY_OF_YEAR, days)
         return DATE_PICKER_YYYY_MM_DD_FORMAT.format(calendar.time)
+    }
+
+    fun getFacebookPageURL(context: Context): String? {
+        val packageManager: PackageManager = context.packageManager
+        return try {
+            val versionCode: Int =
+                packageManager.getPackageInfo("com.facebook.katana", 0).versionCode
+            if (versionCode >= 3002850) { // newer versions of fb app
+                "fb://facewebmodal/f?href=${AppConstant.FACEBOOK_URL}"
+            } else { // older versions of fb app
+                "fb://page/${AppConstant.FACEBOOK_PAGE_ID}"
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            AppConstant.FACEBOOK_URL // normal web url
+        }
     }
 }
