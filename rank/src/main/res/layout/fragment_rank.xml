@@ -28,6 +28,7 @@
             android:layout_height="@dimen/_25sdp"
             android:onClick="@{()->viewModel.onPreviousClick()}"
             android:src="@drawable/ic_left_arrow"
+            android:background="@drawable/selectable_bg"
             app:layout_constraintEnd_toStartOf="@id/selectedDate"
             app:layout_constraintStart_toEndOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@id/top_guideline" />
@@ -52,6 +53,7 @@
             android:layout_height="@dimen/_25sdp"
             android:onClick="@{()->viewModel.onNextClick()}"
             android:src="@drawable/ic_right_arrow"
+            android:background="@drawable/selectable_bg"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toEndOf="@id/selectedDate"
             app:layout_constraintTop_toTopOf="@id/previous" />
