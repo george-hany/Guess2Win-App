@@ -1,0 +1,14 @@
+{
+  "matchId": "",
+  "firstTeamImage": "",
+  "firstTeamName": "Barcelona",
+  "firstTeamScore": "",
+  "secondTeamImage": "",
+  "secondTeamName": "Real Madrid",
+  "secondTeamScore": "",
+  "matchTime": "21:00",
+  "userExpectation": "5:3",
+  "points": "",
+  "isMatchStarted": false,
+  "isMatchEnded": false
+}

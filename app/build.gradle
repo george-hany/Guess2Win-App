@@ -8,7 +8,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "xware.app.app"
+        applicationId "com.app.etwak3"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -77,7 +77,22 @@ dependencies {
     implementation project(path: ':data')
     implementation project(path: ':utils')
     implementation project(path: ':resources')
-    // Koin AndroidX Scope features
+    implementation project(path: ':prefrence')
+    implementation project(path: ':splash')
+    implementation project(path: ':choose_language')
+    implementation project(path: ':choose_theme')
+    implementation project(path: ':login')
+    implementation project(path: ':board')
+    implementation project(path: ':matches')
+    implementation project(path: ':leagues')
+    implementation project(path: ':rank')
+    implementation project(path: ':profile')
+    implementation project(path: ':settings')
+    implementation project(path: ':extrapoints')
+    implementation project(path: ':prizes')
+    implementation project(path: ':help')
+    implementation project(path: ':contactus')
+// Koin AndroidX Scope features
     implementation "org.koin:koin-androidx-scope:$koin_version"
     // Koin AndroidX ViewModel features
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
@@ -93,4 +108,6 @@ dependencies {
     testImplementation 'androidx.test:core:1.2.0'
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:2.19.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+    implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
 }

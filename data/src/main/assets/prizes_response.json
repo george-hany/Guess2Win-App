@@ -1,0 +1,54 @@
+{
+  "prizes": [
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "season"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "month"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "week"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "season"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "month"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "week"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "season"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "month"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "week"
+    },
+    {
+      "image": "",
+      "description": "this is the prize",
+      "type": "season"
+    }
+  ]
+}

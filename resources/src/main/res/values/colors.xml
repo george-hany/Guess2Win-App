@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#3c5772</color>
+    <color name="backGroundColor">#ffffff</color>
+    <color name="textColor">#3c5772</color>
+    <color name="textOnButtons">#ffffff</color>
+    <color name="shapes">#3c5772</color>
+    <color name="matchStatusBackGround">#3c5772</color>
+    <color name="matchStatusText">#ffffff</color>
+    <color name="darckOrange">#FF8C00</color>
+    <color name="whiteGrey">#16000000</color>
+    <color name="matchDetailsTopPartBackground">#16000000</color>
+    <color name="duskLight_greyNight">#3c5772</color>
+    <color name="dusk">#3c5772</color>
+    <color name="greyLight_duskNight">#808080</color>
+    <color name="warmGrey">#858585</color>
+    <color name="pressed_bg">#64b7b7b7</color>
+</resources>

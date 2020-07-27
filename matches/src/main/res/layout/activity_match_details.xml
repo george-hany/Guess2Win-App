@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.feature.matches.ui.matchDetails.MatchDetailsViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topPart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_white_grey_corner_40"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="@dimen/backArrowWidth"
+                android:layout_height="@dimen/backArrowHeight"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/selectable_bg"
+                android:scaleType="centerInside"
+                android:src="@drawable/back_arrow"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/top_guideline" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="Etwk3"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintLeft_toRightOf="@id/backArrow"
+                app:layout_constraintTop_toTopOf="@id/top_guideline" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/Banner_ID"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/backArrow" />
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:src="@drawable/barca"
+                app:layout_constraintEnd_toEndOf="@id/firstTeamName"
+                app:layout_constraintStart_toStartOf="@id/firstTeamName"
+                app:layout_constraintTop_toBottomOf="@id/adView" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/realmadrid"
+                app:layout_constraintEnd_toEndOf="@id/secondTeamName"
+                app:layout_constraintStart_toStartOf="@id/secondTeamName"
+                app:layout_constraintTop_toTopOf="@id/image1" />
+
+            <TextView
+                android:id="@+id/matchStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_grey_corner_40"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@string/not_started"
+                android:textColor="@color/matchStatusText"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{viewModel.matchDetailsUIModel.isMatchStarted()? View.INVISIBLE:View.VISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/matchTime"
+                app:layout_constraintEnd_toEndOf="@id/image2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/image1"
+                app:layout_constraintTop_toTopOf="@id/image1"
+                tools:text="not started" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_grey_corner_40"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@string/finished"
+                android:textColor="@color/matchStatusText"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{viewModel.matchDetailsUIModel.isMatchEnded()? View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/matchTime"
+                app:layout_constraintEnd_toEndOf="@id/image2"
+                app:layout_constraintStart_toStartOf="@id/image1"
+                app:layout_constraintTop_toTopOf="@id/matchStatus"
+                tools:text="not started" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_grey_corner_40"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@string/playing"
+                android:textColor="@color/matchStatusText"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{(viewModel.matchDetailsUIModel.isMatchStarted() &amp;&amp; !viewModel.matchDetailsUIModel.isMatchEnded())? View.VISIBLE:View.INVISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/matchTime"
+                app:layout_constraintEnd_toEndOf="@id/image2"
+                app:layout_constraintStart_toStartOf="@id/image1"
+                app:layout_constraintTop_toTopOf="@id/matchStatus"
+                tools:text="not started" />
+
+            <TextView
+                android:id="@+id/firstTeamScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@{viewModel.matchDetailsUIModel.firstTeamScore}"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@id/matchStatus"
+                app:layout_constraintEnd_toStartOf="@id/matchStatus"
+                app:layout_constraintHorizontal_bias=".8"
+                app:layout_constraintStart_toEndOf="@id/image1"
+                app:layout_constraintTop_toTopOf="@id/matchStatus"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/secondScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@{viewModel.matchDetailsUIModel.secondTeamScore}"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintBottom_toBottomOf="@id/matchStatus"
+                app:layout_constraintEnd_toStartOf="@id/image2"
+                app:layout_constraintHorizontal_bias=".2"
+                app:layout_constraintStart_toEndOf="@id/matchStatus"
+                app:layout_constraintTop_toTopOf="@id/matchStatus"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/firstTeamName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="@{viewModel.matchDetailsUIModel.firstTeamName}"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintEnd_toStartOf="@id/firstTeamScore"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/image1"
+                app:layout_constraintVertical_bias="0"
+                tools:text="barcelona" />
+
+            <TextView
+                android:id="@+id/secondTeamName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="@{viewModel.matchDetailsUIModel.secondTeamName}"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toEndOf="@id/secondScore"
+                app:layout_constraintTop_toBottomOf="@id/image2"
+                app:layout_constraintVertical_bias="0"
+                tools:text="barcelona" />
+
+            <TextView
+                android:id="@+id/matchTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.matchDetailsUIModel.matchTime}"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toTopOf="@+id/userExpectation"
+                app:layout_constraintEnd_toEndOf="@id/matchStatus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/matchStatus"
+                app:layout_constraintTop_toBottomOf="@+id/matchStatus"
+                tools:text="21:00" />
+
+            <TextView
+                android:id="@+id/userExpectation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@{viewModel.matchDetailsUIModel.userExpectation}"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toTopOf="@+id/points"
+                app:layout_constraintEnd_toEndOf="@id/matchStatus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@id/matchStatus"
+                app:layout_constraintTop_toBottomOf="@+id/matchTime"
+                tools:text="5:2" />
+
+            <TextView
+                android:id="@+id/points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@{viewModel.matchDetailsUIModel.points}"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintEnd_toStartOf="@id/text"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/matchStatus"
+                app:layout_constraintTop_toBottomOf="@+id/userExpectation"
+                tools:text="10" />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/points2"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="@{viewModel.matchDetailsUIModel.points.empty? View.GONE:View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintEnd_toEndOf="@id/matchStatus"
+                app:layout_constraintStart_toEndOf="@id/points"
+                app:layout_constraintTop_toTopOf="@id/points" />
+
+            <!--        <NumberPicker-->
+            <!--            android:id="@+id/firstTeamNP"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            app:layout_constraintStart_toStartOf="@id/start_guideline"-->
+            <!--            app:layout_constraintTop_toBottomOf="@id/firstTeamName" />-->
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/top_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="20dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/bottom_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="20dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/make_an_expectation_to_win_prizes"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="@{viewModel.matchDetailsUIModel.isMatchStarted()? View.INVISIBLE:View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline2"
+            app:layout_constraintStart_toStartOf="@id/start_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/topPart" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/the_match_started_sorry_you_can_not_expect_this_match"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="@{(viewModel.matchDetailsUIModel.isMatchStarted() &amp;&amp; !viewModel.matchDetailsUIModel.isMatchEnded())? View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline2"
+            app:layout_constraintStart_toStartOf="@id/start_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/topPart"
+            tools:visibility="invisible" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/the_match_is_over"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="@{viewModel.matchDetailsUIModel.isMatchEnded()? View.VISIBLE:View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline2"
+            app:layout_constraintStart_toStartOf="@id/start_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/topPart"
+            tools:visibility="invisible" />
+
+        <NumberPicker
+            android:id="@+id/firstTeamNP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:visibility="@{viewModel.matchDetailsUIModel.isMatchStarted()? View.GONE:View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="@id/start_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/text2" />
+
+        <NumberPicker
+            android:id="@+id/secondTeamNP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="@{viewModel.matchDetailsUIModel.isMatchStarted()? View.GONE:View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline2"
+            app:layout_constraintTop_toBottomOf="@id/text2" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_shapes_corner_10"
+            android:fontFamily="@font/open_sans_bold"
+            android:onClick="@{()->viewModel.sendMatchExpectation()}"
+            android:text="@string/confirm"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="@{viewModel.matchDetailsUIModel.isMatchStarted()? View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline2"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline2"
+            app:layout_constraintStart_toStartOf="@id/start_guideline2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="20dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

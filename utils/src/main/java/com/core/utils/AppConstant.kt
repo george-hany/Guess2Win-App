@@ -8,8 +8,18 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 
 object AppConstant {
+    const val FACEBOOK_URL = "https://www.facebook.com/etwk3/"
+    const val FACEBOOK_PAGE_ID = "etwk3"
+    const val InterstitialId = "ca-app-pub-3940256099942544/1033173712"
+    const val ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713"
+    const val RewarededVideoAd = "ca-app-pub-3940256099942544/5224354917"
     const val deepLinkArgumentsKey = "android-support-nav:controller:deepLinkIntent"
-
+    const val DAY = "DAY"
+    const val NIGHT = "NIGHT"
+    const val ARABIC_CODE = "ar"
+    const val ENGLISH_CODE = "en"
+    const val loginRequest = 2
+    const val loginSuccess = 3
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
