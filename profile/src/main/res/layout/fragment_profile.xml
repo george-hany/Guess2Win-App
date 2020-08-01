@@ -91,7 +91,7 @@
                 android:id="@+id/edit_phone"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/selectable_bg"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_edit" />

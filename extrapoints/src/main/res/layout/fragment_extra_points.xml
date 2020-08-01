@@ -57,6 +57,7 @@
             android:paddingEnd="@dimen/_15sdp"
             android:paddingBottom="@dimen/_6sdp"
             android:text="@string/watch"
+            android:foreground="?android:attr/selectableItemBackground"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_13ssp"
             android:drawablePadding="@dimen/_10sdp"

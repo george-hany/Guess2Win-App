@@ -21,4 +21,6 @@ class SplashViewModel(private val splashRepo: SplashRepo) : BaseViewModel<Splash
             splashTimeOut.postValue(true)
         }, 5000)
     }
+
+    fun getTheme() = splashRepo.getAppThemeFromSharedPref()
 }
