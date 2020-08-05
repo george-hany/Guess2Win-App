@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import com.core.base.BaseFragment
-import com.core.utils.AppConstant.RewarededVideoAd
+import com.core.utils.CommonUtils.getRewardedVideoAd
 import com.feature.extrapoints.BR
 import com.feature.extrapoints.R
 import com.feature.extrapoints.databinding.FragmentExtraPointsBinding
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
@@ -26,7 +24,6 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
         super.onCreate(savedInstanceState)
         isSubFragment = true
         setupRewardedVideoAd()
-        loadRewardedVideoAd()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,18 +40,9 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
         }
     }
 
-    private fun loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(
-            RewarededVideoAd,
-            AdRequest.Builder().build()
-        )
-    }
-
     private fun setupRewardedVideoAd() {
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context)
         mRewardedVideoAd.rewardedVideoAdListener = object : RewardedVideoAdListener {
             override fun onRewardedVideoAdClosed() {
-                loadRewardedVideoAd()
                 callBack?.onVideoAdClosed()
             }
 
@@ -63,12 +51,13 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
             override fun onRewardedVideoAdLoaded() {}
 
             override fun onRewardedVideoAdOpened() {
+                mRewardedVideoAd = getRewardedVideoAd(requireContext())
+                setupRewardedVideoAd()
                 callBack?.onVideoAdOpened()
             }
 
             override fun onRewardedVideoCompleted() {
                 activity?.toast("rewarded successfully")
-                loadRewardedVideoAd()
             }
 
             override fun onRewarded(p0: RewardItem?) {}
@@ -101,15 +90,19 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     }
 
     companion object {
-        fun newInstance(callBack: CallBack) = ExtraPointsFragment(callBack)
+        fun newInstance(callBack: CallBack, videoAd: RewardedVideoAd) =
+            ExtraPointsFragment(callBack, videoAd)
     }
 
-    constructor(callBack: CallBack) : this() {
+    constructor(callBack: CallBack, videoAd: RewardedVideoAd) : this() {
         this.callBack = callBack
+        mRewardedVideoAd = videoAd
     }
 
     interface CallBack {
         fun onVideoAdOpened()
         fun onVideoAdClosed()
     }
+
+    override fun handleError() {}
 }

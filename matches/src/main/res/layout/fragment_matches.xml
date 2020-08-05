@@ -60,55 +60,70 @@
             app:layout_constraintStart_toEndOf="@id/selectedDate"
             app:layout_constraintTop_toTopOf="@id/previous" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/matchesRecycler"
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:adapter="@{adapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/previous"
-            tools:listitem="@layout/match_item"
-            tools:visibility="gone" />
+            app:layout_constraintTop_toBottomOf="@id/previous">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/matchesRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:adapter="@{adapter}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/match_item"
+        tools:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="@{viewModel.matchesListLiveData.empty? View.VISIBLE : View.GONE}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/broke"
+            app:layout_constraintBottom_toTopOf="@id/text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.matchesListLiveData.empty? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/previous">
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/no_matches_found"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/_13ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image" />
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:src="@drawable/broke"
-                app:layout_constraintBottom_toTopOf="@id/text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
-                android:text="@string/no_matches_found"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/_13ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"

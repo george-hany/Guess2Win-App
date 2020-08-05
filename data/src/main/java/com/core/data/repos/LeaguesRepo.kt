@@ -3,6 +3,7 @@ package com.core.data.repos
 import androidx.lifecycle.LiveData
 import com.core.data.MainExceptions
 import com.core.data.base.BaseRepo
+import com.core.data.constant.SharedPrefKeys.Companion.LANGUAGE
 import com.core.data.model.leagues.LeaguesListResponseModel
 import com.core.data.network.ApiFactory
 import com.core.data.network.NetworkBoundFileResource
@@ -20,24 +21,29 @@ class LeaguesRepo(
     val fileManager: FileManager
 ) : BaseRepo(sharedPreferences, networkFactory) {
     fun requestLeaguesList(): LiveData<LeaguesListResponseModel> {
-        networkFactory.setFileName("leagues_response.json")
+//        networkFactory.setFileName("leagues_response.json")
         return object : NetworkBoundFileResource<LeaguesListResponseModel>(
             networkFactory,
-            fileManager = null
+            fileName = "leagues_response.json",
+            fileManager = fileManager
         ) {
             override fun convert(json: String): LeaguesListResponseModel? {
                 return Gson().fromJson(json, object : TypeToken<LeaguesListResponseModel>() {}.type)
             }
 
             override suspend fun createCall(): suspend () -> Response<LeaguesListResponseModel> = {
-                apiFactory.getApisHelper().getLeaguesList().await()
+                apiFactory.getApisHelper().getLeaguesList(getThemeFromSharedPref()).await()
             }
 
             override fun onFetchFailed(exception: MainExceptions) {
                 exceptionMessage.value = exception.exception
             }
 
-            override fun handleErrorResponseType(response: Response<LeaguesListResponseModel>) {}
+            override fun handleErrorResponseType(response: Response<LeaguesListResponseModel>) {
+                exceptionMessage.value = response.message()
+            }
         }.asLiveData()
     }
+
+    fun getThemeFromSharedPref() = sharedPreference.getString(LANGUAGE)
 }

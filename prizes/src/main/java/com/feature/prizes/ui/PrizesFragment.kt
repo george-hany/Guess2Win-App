@@ -11,6 +11,7 @@ import com.feature.prizes.databinding.FragmentPrizesBinding
 import com.feature.prizes.ui.adapter.PrizesAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.core.utils.SpacingItemDecoration
+import kotlinx.android.synthetic.main.fragment_prizes.*
 
 /**
  * A simple [Fragment] subclass.
@@ -27,15 +28,22 @@ class PrizesFragment : BaseFragment<FragmentPrizesBinding, PrizesViewModel>() {
         setupPrizesRecycler()
         prizesMediatorLiveDataObserver()
         prizesUIListLiveDataObserver()
+        swipeRefreshLayoutListener()
+    }
+
+    private fun swipeRefreshLayoutListener() {
+        viewDataBinding.swipeRefreshLayout.setOnRefreshListener { prizesViewModel.getPrizes() }
     }
 
     private fun prizesUIListLiveDataObserver() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = true
         prizesViewModel.prizesUIListLiveData.observe(viewLifecycleOwner, Observer {
             viewDataBinding.adapter?.run {
                 prizesList.clear()
                 prizesList.addAll(it)
                 notifyDataSetChanged()
             }
+            viewDataBinding.swipeRefreshLayout.isRefreshing = false
         })
     }
 
@@ -55,4 +63,8 @@ class PrizesFragment : BaseFragment<FragmentPrizesBinding, PrizesViewModel>() {
     override fun layoutId(): Int = R.layout.fragment_prizes
 
     override fun getViewModel(): PrizesViewModel = prizesViewModel
+
+    override fun handleError() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = false
+    }
 }

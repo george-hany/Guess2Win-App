@@ -1,11 +1,15 @@
 package com.feature.splash.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.core.base.BaseFragment
+import com.core.utils.AppConstant
 import com.core.utils.AppConstant.InterstitialId
 import com.core.utils.AppConstant.loginRequest
 import com.feature.login.ui.LoginFragment
@@ -21,7 +25,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
     private lateinit var mInterstitialAd: InterstitialAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupInterstitialAd()
+//        setupInterstitialAd()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        setupAppEnvironment()
     }
 
     private fun setupInterstitialAd() {
@@ -60,22 +69,41 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
 
     private fun splashTimeOutObservation() {
         splashViewModel.splashTimeOut.observe(viewLifecycleOwner, Observer {
-            if (splashViewModel.appLanguage.isNullOrEmpty()) {
-                navigateToUriWithClearStack(R.string.chooseLanguage)
-            } else if (splashViewModel.appTheme.isNullOrEmpty()) {
-                navigateToUriWithClearStack(R.string.chooseTheme)
-            } else if (!splashViewModel.isLoggedIn) {
-                activity?.startActivityForResult(
-                    Intent(context, LoginFragment::class.java),
-                    loginRequest
-                )
-            } else {
-                if (mInterstitialAd.isLoaded) {
-                    mInterstitialAd.show()
-                } else {
-                    navigateToUriWithClearStack(R.string.board)
+            when {
+                splashViewModel.appLanguage.isNullOrEmpty() -> {
+                    navigateToUriWithClearStack(R.string.chooseLanguage)
+                }
+                splashViewModel.appTheme.isNullOrEmpty() -> {
+                    navigateToUriWithClearStack(R.string.chooseTheme)
+                }
+                else -> {
+                    activity?.startActivityForResult(
+                        Intent(context, LoginFragment::class.java),
+                        loginRequest
+                    )
+                    //            } else {
+                    //                if (mInterstitialAd.isLoaded) {
+                    //                    mInterstitialAd.show()
+                    //                } else {
+                    //                    navigateToUriWithClearStack(R.string.board)
+                    //                }
                 }
             }
         })
     }
+
+    private fun setupAppEnvironment() {
+        Log.e("theme", splashViewModel.getTheme() ?: "")
+        if (!splashViewModel.getTheme().isNullOrEmpty()) {
+            if (splashViewModel.getTheme() == AppConstant.NIGHT) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
+
+    override fun handleError() {}
 }

@@ -46,4 +46,6 @@ class ChooseLanguageFragment :
     override fun layoutId(): Int = R.layout.fragment_choose_language
 
     override fun getViewModel(): ChooseLanguageViewModel = chooseLanguageViewModel
+
+    override fun handleError() {}
 }

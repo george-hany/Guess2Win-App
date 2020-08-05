@@ -30,15 +30,22 @@ class LeaguesFragment : BaseFragment<FragmentLeaguesBinding, LeaguesViewModel>()
         setupLeaguesRecyclerEnvironment()
         leaguesMediatorLiveDataObserver()
         leaguesUIListLiveDataObserver()
+        swipeRefreshLayoutListener()
+    }
+
+    private fun swipeRefreshLayoutListener() {
+        viewDataBinding.swipeRefreshLayout.setOnRefreshListener { leaguesViewModel.getLeaguesList() }
     }
 
     private fun leaguesUIListLiveDataObserver() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = true
         leaguesViewModel.leaguesUIListLiveData.observe(viewLifecycleOwner, Observer {
             viewDataBinding.adapter?.run {
                 leaguesList.clear()
                 leaguesList.addAll(it)
                 notifyDataSetChanged()
             }
+            viewDataBinding.swipeRefreshLayout.isRefreshing = false
         })
     }
 
@@ -65,4 +72,7 @@ class LeaguesFragment : BaseFragment<FragmentLeaguesBinding, LeaguesViewModel>()
     override fun layoutId(): Int = R.layout.fragment_leagues
 
     override fun getViewModel(): LeaguesViewModel = leaguesViewModel
+    override fun handleError() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = false
+    }
 }

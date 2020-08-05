@@ -2,15 +2,13 @@ package com.core.data.model.login
 
 import com.google.gson.annotations.SerializedName
 
-class LoginRequest(
-    @SerializedName("first_name")
-    var firstName: String? = null,
+class LoginRequest {
+    @SerializedName("Name")
+    var Name: String = ""
 
-    @SerializedName("last_name")
-    var lastName: String? = null,
+    @SerializedName("ClientId")
+    var ClientId: String = ""
 
-    @SerializedName("id")
-    var id: String? = null,
-
-    var userImage: String? = null
-)
+    @SerializedName("Image")
+    var Image: String = ""
+}

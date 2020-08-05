@@ -13,13 +13,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
         android:background="?android:attr/colorBackground">
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
-            android:src="@drawable/barca"
+            app:image="@{model.image}"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline"

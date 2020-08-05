@@ -8,6 +8,10 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.annotation.LayoutRes
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardedVideoAd
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,7 +21,7 @@ object CommonUtils {
 
     fun showLoadingDialog(context: Context, @LayoutRes resId: Int): ProgressDialog {
         val progressDialog = ProgressDialog(context)
-        progressDialog.show()
+
         if (progressDialog.window != null) {
             progressDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
@@ -27,6 +31,7 @@ object CommonUtils {
             setCancelable(false)
             setCanceledOnTouchOutside(false)
         }
+        progressDialog.show()
         return progressDialog
     }
 
@@ -83,5 +88,26 @@ object CommonUtils {
         } catch (e: PackageManager.NameNotFoundException) {
             AppConstant.FACEBOOK_URL // normal web url
         }
+    }
+
+    fun getInterstitialAd(context: Context): InterstitialAd {
+        val mInterstitialAd = InterstitialAd(context)
+        mInterstitialAd.adUnitId = AppConstant.InterstitialId
+        mInterstitialAd.loadAd(
+            getAdRequest()
+        )
+        return mInterstitialAd
+    }
+
+    fun getAdRequest(): AdRequest =
+        AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
+
+    fun getRewardedVideoAd(context: Context): RewardedVideoAd {
+        val mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context)
+        mRewardedVideoAd.loadAd(
+            AppConstant.RewarededVideoAd,
+            getAdRequest()
+        )
+        return mRewardedVideoAd
     }
 }

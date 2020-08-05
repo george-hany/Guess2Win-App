@@ -40,4 +40,6 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
     override fun layoutId(): Int = R.layout.fragment_contact_us
 
     override fun getViewModel(): ContactUsViewModel = contactUsViewModel
+
+    override fun handleError() {}
 }

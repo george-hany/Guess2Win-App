@@ -1,4 +1,4 @@
-package xware.core.data.network.interfaces
+package com.core.data.network.interfaces
 
 import com.core.data.model.leagues.LeaguesListResponseModel
 import com.core.data.model.leaguesRank.LeaguesRankResponseModel
@@ -27,8 +27,8 @@ interface ApisHelper {
     @POST("")
     fun sendMatchExpectation(matchExpectationRequest: MatchExpectationRequest): Deferred<Response<MatchExpectationResponse>>
 
-    @GET("")
-    fun getLeaguesList(): Deferred<Response<LeaguesListResponseModel>>
+    @GET("Leagues/GetLeagues/{lang}")
+    fun getLeaguesList(@Path("lang") lang: String): Deferred<Response<LeaguesListResponseModel>>
 
     @GET("")
     fun getLeaguesMatchesByDate(
@@ -42,8 +42,8 @@ interface ApisHelper {
     @GET("")
     fun getRanks(type: String, selectedNum: Int): Deferred<Response<RankResponseModel>>
 
-    @POST("")
-    fun login(loginRequest: LoginRequest): Deferred<Response<LoginResponse>>
+    @POST("Account/LoginWithFacebook")
+    fun login(@Body loginRequest: LoginRequest): Deferred<Response<LoginResponse>>
 
     @GET("")
     fun getPrizes(): Deferred<Response<PrizesResponse>>

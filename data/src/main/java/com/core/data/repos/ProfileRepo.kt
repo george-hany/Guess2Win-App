@@ -3,6 +3,8 @@ package com.core.data.repos
 import androidx.lifecycle.LiveData
 import com.core.data.MainExceptions
 import com.core.data.base.BaseRepo
+import com.core.data.constant.SharedPrefKeys.Companion.LOGIN_DATA
+import com.core.data.model.login.LoginResponse
 import com.core.data.model.profile.ChangePhoneRequest
 import com.core.data.model.profile.ChangePhoneResponse
 import com.core.data.network.ApiFactory
@@ -41,5 +43,12 @@ class ProfileRepo(
                 exceptionMessage.value = exception.exception
             }
         }.asLiveData()
+    }
+
+    fun getLoginResponseFromSharedPref(): LoginResponse {
+        return Gson().fromJson(
+            sharedPreference.getString(LOGIN_DATA),
+            object : TypeToken<LoginResponse>() {}.type
+        )
     }
 }

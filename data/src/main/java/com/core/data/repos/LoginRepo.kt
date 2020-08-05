@@ -28,7 +28,7 @@ open class LoginRepo(
     }
 
     fun login(loginRequest: LoginRequest): LiveData<LoginResponse> {
-        networkFactory.setFileName("login_response.json")
+//        networkFactory.setFileName("login_response.json")
         return object : NetworkBoundFileResource<LoginResponse>(
             networkFactory,
             DataStrategy.Strategies.NETWORK_ONLY,
@@ -42,11 +42,15 @@ open class LoginRepo(
                 apiFactory.getApisHelper().login(loginRequest).await()
             }
 
-            override fun handleErrorResponseType(response: Response<LoginResponse>) {}
+            override fun handleErrorResponseType(response: Response<LoginResponse>) {
+                exceptionMessage.value = response.message()
+            }
 
             override fun onFetchFailed(exception: MainExceptions) {
                 exceptionMessage.value = exception.exception
             }
         }.asLiveData()
     }
+
+    fun isLoggedIn() = sharedPreference.getBoolean(IS_LOGGED_IN)
 }

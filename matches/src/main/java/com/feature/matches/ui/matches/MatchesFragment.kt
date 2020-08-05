@@ -33,6 +33,13 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
         selectedDateObserver()
         matchesMediatorLiveDataObserver()
         matchesListLiveDataObserver()
+        swipeRefreshLayoutListener()
+    }
+
+    private fun swipeRefreshLayoutListener() {
+        viewDataBinding.swipeRefreshLayout.setOnRefreshListener {
+            matchesViewModel.selectedDate.value = matchesViewModel.selectedDate.value
+        }
     }
 
     private fun setUpMatchesRecyclerEnvironment() {
@@ -56,6 +63,7 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
                 matchesList.addAll(it)
                 notifyDataSetChanged()
             }
+            viewDataBinding.swipeRefreshLayout.isRefreshing = false
         })
     }
 
@@ -70,6 +78,7 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
             } ?: kotlin.run {
                 matchesViewModel.getMatchesByDate(it)
             }
+            viewDataBinding.swipeRefreshLayout.isRefreshing = true
         })
     }
 
@@ -87,5 +96,9 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
         }
 
         val MODEL = "MODEL"
+    }
+
+    override fun handleError() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = false
     }
 }

@@ -31,7 +31,7 @@ object BindingUtils {
     @JvmStatic
     fun bindImage(view: ImageView, url: String?) {
         if (url != null) {
-            Glide.with(view.context).load(url).into(view)
+            Glide.with(view.context).load(url).placeholder(R.drawable.ic_ball_placeholder).into(view)
         }
     }
 

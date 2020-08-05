@@ -44,4 +44,6 @@
     <string name="day_mood">الوضع الصباحي</string>
     <string name="Invalid_Phone_Number">رقم الهاتف غير صحيح</string>
     <string name="phone">الهاتف</string>
-    <string name="phone_number">رقم الهاتف</string></resources>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="add_your_phone_number">ادخل رقم هاتفك</string>
+</resources>

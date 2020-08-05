@@ -102,4 +102,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun layoutId(): Int = R.layout.fragment_profile
 
     override fun getViewModel(): ProfileViewModel = profileViewModel
+
+    override fun handleError() {}
 }

@@ -33,18 +33,33 @@
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/prizesRecycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:adapter="@{adapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/text"
-            tools:listitem="@layout/prize_item" />
+            app:layout_constraintTop_toBottomOf="@id/text">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/prizesRecycler"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:adapter="@{adapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/prize_item" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"

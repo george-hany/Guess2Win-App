@@ -24,6 +24,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">#ffffff</item>
     </style>
+    <style name="CustomDialogTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 <!--    <style name="AppThemeNight" parent="Theme.AppCompat.DayNight.NoActionBar">-->
 <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
 <!--        <item name="colorPrimary">@color/colorPrimary</item>-->

@@ -23,4 +23,6 @@ class HelpFragment : BaseFragment<FragmentHelpBinding, HelpViewModel>() {
     override fun layoutId(): Int = R.layout.fragment_help
 
     override fun getViewModel(): HelpViewModel = helpViewModel
+
+    override fun handleError() {}
 }
