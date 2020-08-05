@@ -10,7 +10,7 @@ class LeaguesRankViewModel(var leaguesRankRepo: LeaguesRankRepo) :
     BaseViewModel<LeaguesRankRepo>(leaguesRankRepo) {
     val leaguesRankMediatorLiveData = MediatorLiveData<Any>()
     val ranksUIListLiveData = MutableLiveData<List<RankItemUIModel>>()
-    val userId = leaguesRankRepo.getLoginResponseFromSharedPref().id
+    val userId = leaguesRankRepo.getLoginResponseFromSharedPref().user?.id
 
     fun getRanks(leagueId: String) {
         val requestRanks = leaguesRankRepo.requestLeaguesRankList(leagueId)

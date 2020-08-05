@@ -6,7 +6,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.core.base.BaseFragment
 import com.feature.leagues.BR
-
 import com.feature.leagues.R
 import com.feature.leagues.databinding.FragmentLeaguesRankBinding
 import com.feature.leagues.ui.leaguesRank.adapter.RankListAdapter
@@ -34,19 +33,31 @@ class LeaguesRankFragment : BaseFragment<FragmentLeaguesRankBinding, LeaguesRank
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRanksRecyclerEnvironment()
         leaguesRankMediatorLiveDataObserver()
         ranksUIListLiveDataObserver()
+        swipeRefreshLayoutListener()
+    }
+
+    private fun swipeRefreshLayoutListener() {
+        viewDataBinding.swipeRefreshLayout.setOnRefreshListener {
+            leaguesRankViewModel.getRanks(
+                arguments?.getString(
+                    LEAGUE_ID
+                ) ?: ""
+            )
+        }
     }
 
     private fun ranksUIListLiveDataObserver() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = true
         leaguesRankViewModel.ranksUIListLiveData.observe(viewLifecycleOwner, Observer {
             viewDataBinding.adapter?.run {
                 ranksList.clear()
                 ranksList.addAll(it)
                 notifyDataSetChanged()
             }
+            viewDataBinding.swipeRefreshLayout.isRefreshing = false
         })
     }
 
@@ -56,7 +67,7 @@ class LeaguesRankFragment : BaseFragment<FragmentLeaguesRankBinding, LeaguesRank
 
     private fun setupRanksRecyclerEnvironment() {
         viewDataBinding.run {
-            adapter = RankListAdapter(arrayListOf(),leaguesRankViewModel.userId)
+            adapter = RankListAdapter(arrayListOf(), leaguesRankViewModel.userId)
             rankRecycler.addItemDecoration(SpacingItemDecoration(0, 0, 20, 20))
         }
     }
@@ -76,4 +87,6 @@ class LeaguesRankFragment : BaseFragment<FragmentLeaguesRankBinding, LeaguesRank
 
         val LEAGUE_ID = "LEAGUE_ID"
     }
+
+    override fun handleError() {}
 }

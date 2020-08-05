@@ -52,7 +52,7 @@ val reposModules = module {
     fun provideLoginRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork
+        networkFactory: NetworkFactory
     ): LoginRepo {
         return LoginRepo(apiFactory, sharedPreference, networkFactory)
     }
@@ -90,7 +90,7 @@ val reposModules = module {
     fun provideLeaguesRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): LeaguesRepo {
         return LeaguesRepo(apiFactory, sharedPreference, networkFactory, fileManager)

@@ -14,7 +14,7 @@ class LeaguesViewModel(var leaguesRepo: LeaguesRepo) : BaseViewModel<LeaguesRepo
         getLeaguesList()
     }
 
-    private fun getLeaguesList() {
+    fun getLeaguesList() {
         val requestLeagues = leaguesRepo.requestLeaguesList()
         leaguesMediatorLiveData.addSource(requestLeagues) { response ->
             leaguesUIListLiveData.value =

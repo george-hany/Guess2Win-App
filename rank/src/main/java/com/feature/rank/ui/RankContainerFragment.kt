@@ -34,4 +34,6 @@ val rankContainerViewModel: RankContainerViewModel by viewModel()
     override fun layoutId(): Int = R.layout.fragment_rank_container
 
     override fun getViewModel(): RankContainerViewModel = rankContainerViewModel
+
+    override fun handleError() {}
 }

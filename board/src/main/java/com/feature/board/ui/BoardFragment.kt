@@ -3,6 +3,7 @@ package com.feature.board.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import androidx.lifecycle.Observer
 import com.core.base.BaseFragment
 import com.core.utils.AppConstant
 import com.core.utils.AppConstant.ADMOB_APP_ID
-import com.core.utils.AppConstant.InterstitialId
+import com.core.utils.CommonUtils.getAdRequest
+import com.core.utils.CommonUtils.getInterstitialAd
+import com.core.utils.CommonUtils.getRewardedVideoAd
 import com.core.utils.InterstitialAdManager
 import com.facebook.login.LoginManager
 import com.feature.board.BR
@@ -31,9 +34,9 @@ import com.feature.profile.ui.ProfileFragment
 import com.feature.rank.ui.RankContainerFragment
 import com.feature.settings.ui.SettingsFragment
 import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardedVideoAd
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -55,20 +58,17 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
     private var contactUsFragment: ContactUsFragment? = null
     private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var interstitialAdManager: InterstitialAdManager
+    lateinit var rewardedVideoAd: RewardedVideoAd
     override fun onCreate(savedInstanceState: Bundle?) {
-//        setupAppEnvironment()
         super.onCreate(savedInstanceState)
         setupInterstitialAd()
         MobileAds.initialize(context, ADMOB_APP_ID)
-        interstitialAdManager = InterstitialAdManager(context)
+        interstitialAdManager = InterstitialAdManager(requireContext())
+        rewardedVideoAd = getRewardedVideoAd(requireContext())
     }
 
     private fun setupInterstitialAd() {
-        mInterstitialAd = InterstitialAd(context)
-        mInterstitialAd.adUnitId = InterstitialId
-        mInterstitialAd.loadAd(
-            AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
-        )
+        mInterstitialAd = getInterstitialAd(requireContext())
         mInterstitialAd.adListener = object : AdListener() {
             override fun onAdOpened() {
                 super.onAdOpened()
@@ -78,9 +78,7 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
             override fun onAdClosed() {
                 super.onAdClosed()
                 openRankFragment(3)
-                mInterstitialAd.loadAd(
-                    AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
-                )
+                setupInterstitialAd()
                 interstitialAdManager.startInterstitialAd()
             }
         }
@@ -101,10 +99,8 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
     }
 
     private fun setupAdView() {
-        val adRequest =
-            AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
         viewDataBinding.adView.run {
-            loadAd(adRequest)
+            loadAd(getAdRequest())
         }
     }
 
@@ -151,7 +147,8 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
                     extraPointsFragment?.let {
                         replaceExistFragment(it)
                     } ?: kotlin.run {
-                        extraPointsFragment = ExtraPointsFragment.newInstance(this@BoardFragment)
+                        extraPointsFragment =
+                            ExtraPointsFragment.newInstance(this@BoardFragment, rewardedVideoAd)
                         replaceNewFragment(extraPointsFragment!!)
                     }
                 }
@@ -340,7 +337,11 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.e("destroyy", "true")
         interstitialAdManager.stopInterstitialAd()
+        matchesFragment?.let {
+            matchesFragment = null
+        }
     }
 
     override fun onChangeTheme(themeType: String) {
@@ -361,15 +362,5 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
         interstitialAdManager.startInterstitialAd()
     }
 
-    private fun setupAppEnvironment() {
-        if (!boardViewModel.getTheme().isNullOrEmpty()) {
-            if (boardViewModel.getTheme() == AppConstant.NIGHT) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-    }
+    override fun handleError() {}
 }

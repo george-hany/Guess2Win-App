@@ -45,6 +45,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
 
     abstract fun getViewModel(): V
 
+    abstract fun handleError()
     /**
      * Override for set view model
      *
@@ -126,6 +127,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
             } else {
                 showMessage(it as String)
             }
+            handleError()
+            mViewModel.setIsLoading(false)
         })
     }
 

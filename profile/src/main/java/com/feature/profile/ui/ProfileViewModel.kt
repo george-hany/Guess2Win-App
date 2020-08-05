@@ -13,6 +13,7 @@ class ProfileViewModel(var profileRepo: ProfileRepo) : BaseViewModel<ProfileRepo
     var phoneNumberError = MutableLiveData<Int>()
     val profileMediatorLiveData = MediatorLiveData<Any>()
     val changePasswordSuccess = MutableLiveData<Boolean>()
+    val loginResponse = MutableLiveData(profileRepo.getLoginResponseFromSharedPref())
     fun savePhone() {
         if (!validate())
             return

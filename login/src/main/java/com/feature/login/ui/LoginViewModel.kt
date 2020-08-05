@@ -1,7 +1,6 @@
 package com.feature.login.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.core.base.BaseViewModel
@@ -19,17 +18,21 @@ class LoginViewModel(private val loginRepo: LoginRepo) : BaseViewModel<LoginRepo
         val request = GraphRequest.newMeRequest(
             currentAccessToken
         ) { `object`, _ ->
-            Log.d("TAG", `object`.toString())
             try {
+                setIsLoading(true)
                 val firstName = `object`.getString("first_name")
                 val lastName = `object`.getString("last_name")
                 val id = `object`.getString("id")
                 val imageUrl =
                     "https://graph.facebook.com/$id/picture?type=normal"
-                val loginRequest = LoginRequest(firstName, lastName, id, imageUrl)
+                val loginRequest = LoginRequest()
+                loginRequest.Name = "$firstName $lastName"
+                loginRequest.ClientId = id
+                loginRequest.Image = imageUrl
                 login(loginRequest)
             } catch (e: JSONException) {
                 message.value = e.printStackTrace()
+                setIsLoading(false)
             }
         }
         val parameters = Bundle()
@@ -43,6 +46,9 @@ class LoginViewModel(private val loginRepo: LoginRepo) : BaseViewModel<LoginRepo
         loginMediatorLiveData.addSource(requestLogin) {
             loginRepo.saveLoginResponseInSharedPref(it)
             loginFinished.value = true
+            setIsLoading(false)
         }
     }
+
+    fun isLoggedIn() = loginRepo.isLoggedIn()
 }

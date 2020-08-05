@@ -29,15 +29,18 @@
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="@dimen/_110sdp"
             android:layout_marginTop="@dimen/_40sdp"
-            android:src="@drawable/barca"
+            app:civ_border_width="@dimen/_1sdp"
+            app:civ_border_color="?android:attr/textColorPrimary"
+            app:image="@{viewModel.loginResponse.user.image}"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/text" />
+            app:layout_constraintTop_toBottomOf="@id/text"
+            tools:src="@tools:sample/avatars"/>
 
         <TextView
             android:id="@+id/text2"
@@ -46,12 +49,13 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="George Hany"
+            android:text="@{viewModel.loginResponse.user.userName}"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/image" />
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="George Hany" />
 
         <RelativeLayout
             android:id="@+id/phone_container"
@@ -85,15 +89,17 @@
                 android:layout_below="@id/phone_txt"
                 android:layout_marginStart="7dp"
                 android:layout_toEndOf="@id/phone_icon"
+                android:hint="@string/add_your_phone_number"
+                android:text="@{viewModel.loginResponse.user.phoneNumber}"
                 tools:text="01000000000" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/edit_phone"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_edit" />
 
         </RelativeLayout>

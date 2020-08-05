@@ -77,4 +77,6 @@ class ChooseThemeFragment : BaseFragment<FragmentChooseThemeBinding, ChooseTheme
     override fun layoutId(): Int = R.layout.fragment_choose_theme
 
     override fun getViewModel(): ChooseThemeViewModel = chooseThemeViewModel
+
+    override fun handleError() {}
 }

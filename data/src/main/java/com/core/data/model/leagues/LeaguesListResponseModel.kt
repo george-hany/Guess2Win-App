@@ -3,7 +3,7 @@ package com.core.data.model.leagues
 import com.google.gson.annotations.SerializedName
 
 data class LeaguesListResponseModel(
-    @SerializedName("result")
+    @SerializedName("data")
     var result: List<Leagues?>? = null
 ) {
     data class Leagues(

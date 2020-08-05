@@ -3,10 +3,10 @@ package com.feature.matches.ui.matchDetails
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.core.base.BaseActivity
+import com.core.utils.CommonUtils
 import com.feature.matches.BR
 import com.feature.matches.R
 import com.feature.matches.databinding.ActivityMatchDetailsBinding
-import com.google.android.gms.ads.AdRequest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDetailsViewModel>() {
@@ -25,10 +25,8 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
         setupAdView()
     }
     private fun setupAdView() {
-        val adRequest =
-            AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
         viewDataBinding.adView.run {
-            loadAd(adRequest)
+            loadAd(CommonUtils.getAdRequest())
         }
     }
     private fun backArrowListener() {

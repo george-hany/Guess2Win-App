@@ -41,6 +41,13 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
         selectedDateObserver()
         rankMediatorLiveDataObserver()
         ranksUIListLiveDataObserver()
+        swipeRefreshLayoutListener()
+    }
+
+    private fun swipeRefreshLayoutListener() {
+        viewDataBinding.swipeRefreshLayout.setOnRefreshListener {
+            rankViewModel.selectedDate.value = rankViewModel.selectedDate.value
+        }
     }
 
     private fun setupRanksRecycler() {
@@ -58,6 +65,7 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
                     ranksList.addAll(it)
                     notifyDataSetChanged()
                 }
+                viewDataBinding.swipeRefreshLayout.isRefreshing = false
             }
         })
     }
@@ -69,6 +77,7 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
     private fun selectedDateObserver() {
         rankViewModel.selectedDate.observe(viewLifecycleOwner, Observer {
             rankViewModel.getRanks()
+            viewDataBinding.swipeRefreshLayout.isRefreshing = true
         })
     }
 
@@ -111,5 +120,9 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
             }
             opened = true
         }
+    }
+
+    override fun handleError() {
+        viewDataBinding.swipeRefreshLayout.isRefreshing = false
     }
 }

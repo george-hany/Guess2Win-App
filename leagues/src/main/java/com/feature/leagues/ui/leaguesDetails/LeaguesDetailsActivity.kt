@@ -2,6 +2,7 @@ package com.feature.leagues.ui.leaguesDetails
 
 import android.os.Bundle
 import com.core.base.BaseActivity
+import com.core.utils.CommonUtils
 import com.feature.leagues.BR
 import com.feature.leagues.R
 import com.feature.leagues.databinding.ActivityLeaguesDetailsBinding
@@ -23,10 +24,8 @@ class LeaguesDetailsActivity :
         setupAdView()
     }
     private fun setupAdView() {
-        val adRequest =
-            AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
         viewDataBinding.adView.run {
-            loadAd(adRequest)
+            loadAd(CommonUtils.getAdRequest())
         }
     }
     private fun setupViewPager() {

@@ -1,6 +1,5 @@
 package com.feature.settings.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -10,7 +9,6 @@ import com.core.utils.AppConstant.NIGHT
 import com.feature.settings.BR
 import com.feature.settings.R
 import com.feature.settings.databinding.FragmentSettingsBinding
-import com.feature.settings.ui.theme.ChangeThemeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -34,14 +32,6 @@ class SettingsFragment() : BaseFragment<FragmentSettingsBinding, SettingsViewMod
         themeSwitchListener()
         notificationListener()
         languageListener()
-        viewDataBinding.text2.setOnClickListener {
-            startActivity(
-                Intent(
-                    context,
-                    ChangeThemeActivity::class.java
-                )
-            )
-        }
     }
 
     private fun languageListener() {
@@ -51,8 +41,10 @@ class SettingsFragment() : BaseFragment<FragmentSettingsBinding, SettingsViewMod
                 if (isChecked) {
                     if ((currentLocal?.toLanguageTag() ?: "") == "ar") {
                         baseActivity?.setNewLocale("EN")
+                        settingsViewModel.saveLanguage("en")
                     } else if ((currentLocal?.toLanguageTag() ?: "") == "en") {
                         baseActivity?.setNewLocale("AR")
+                        settingsViewModel.saveLanguage("ar")
                     }
                     viewDataBinding.languageSwitch.isChecked = false
                     requireActivity().supportFragmentManager.beginTransaction()
@@ -128,4 +120,6 @@ class SettingsFragment() : BaseFragment<FragmentSettingsBinding, SettingsViewMod
     interface CallBack {
         fun onChangeTheme(themeType: String)
     }
+
+    override fun handleError() {}
 }

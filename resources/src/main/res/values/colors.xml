@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary">#3c5772</color>
+    <color name="colorPrimaryDark">#3c5772</color>
     <color name="colorAccent">#3c5772</color>
     <color name="backGroundColor">#ffffff</color>
     <color name="textColor">#3c5772</color>
@@ -17,4 +17,6 @@
     <color name="greyLight_duskNight">#808080</color>
     <color name="warmGrey">#858585</color>
     <color name="pressed_bg">#64b7b7b7</color>
+    <color name="dialogBackground">#40000000</color>
+    <color name="dialogCardViewBackground">#70000000</color>
 </resources>
