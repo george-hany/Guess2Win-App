@@ -8,6 +8,8 @@
         <variable
             name="model"
             type="com.feature.prizes.ui.model.PrizeUIModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -48,15 +50,90 @@
                 tools:text="this is the prize description" />
 
             <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/from_level"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintStart_toStartOf="@id/description"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@{model.fromPoint}"
+                app:layout_constraintBottom_toBottomOf="@id/text"
+                app:layout_constraintStart_toEndOf="@id/text"
+                app:layout_constraintTop_toTopOf="@id/text"
+                tools:text="10" />
+
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/to_level"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintEnd_toStartOf="@id/text4"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/text2"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@{model.toPoint}"
+                app:layout_constraintBottom_toBottomOf="@id/text3"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toEndOf="@id/text3"
+                app:layout_constraintTop_toTopOf="@id/text3"
+                tools:text="10" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@{model.type}"
+                android:text="@string/season"
                 android:textColor="@color/darckOrange"
                 android:textSize="@dimen/_9ssp"
+                android:visibility="@{model.type == 1 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
                 app:layout_constraintStart_toStartOf="@id/description"
-                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintTop_toBottomOf="@id/text"
+                app:layout_constraintVertical_bias="1"
+                tools:text="season" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/month"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{model.type == 2 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintStart_toStartOf="@id/description"
+                app:layout_constraintTop_toBottomOf="@id/text"
+                app:layout_constraintVertical_bias="1"
+                tools:text="season" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/week"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{model.type == 3 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintStart_toStartOf="@id/description"
+                app:layout_constraintTop_toBottomOf="@id/text"
                 app:layout_constraintVertical_bias="1"
                 tools:text="season" />
 

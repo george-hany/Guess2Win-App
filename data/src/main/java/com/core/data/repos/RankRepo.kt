@@ -5,6 +5,7 @@ import com.core.data.MainExceptions
 import com.core.data.base.BaseRepo
 import com.core.data.constant.SharedPrefKeys
 import com.core.data.model.login.LoginResponse
+import com.core.data.model.rank.RankByMonthResponseModel
 import com.core.data.model.rank.RankResponseModel
 import com.core.data.network.ApiFactory
 import com.core.data.network.NetworkBoundFileResource
@@ -47,4 +48,31 @@ class RankRepo(
         sharedPreference.getString(SharedPrefKeys.LOGIN_DATA),
         object : TypeToken<LoginResponse>() {}.type
     )
+
+    fun requestRanksByMonth(selectedNum: Int): LiveData<List<RankByMonthResponseModel>> {
+//        this.networkFactory.setFileName("ranks_by_month_$selectedNum.json")
+        return object : NetworkBoundFileResource<List<RankByMonthResponseModel>>(
+            networkFactory,
+            fileName = "ranks_by_month_$selectedNum.json",
+            fileManager = fileManager
+        ) {
+            override fun convert(json: String): List<RankByMonthResponseModel>? {
+                return Gson().fromJson(
+                    json,
+                    object : TypeToken<List<RankByMonthResponseModel>>() {}.type
+                )
+            }
+
+            override suspend fun createCall(): suspend () -> Response<List<RankByMonthResponseModel>> =
+                {
+                    apiFactory.getApisHelper().getRanksByMonth(selectedNum).await()
+                }
+
+            override fun onFetchFailed(exception: MainExceptions) {
+                exceptionMessage.value = exception.exception
+            }
+
+            override fun handleErrorResponseType(response: Response<List<RankByMonthResponseModel>>) {}
+        }.asLiveData()
+    }
 }

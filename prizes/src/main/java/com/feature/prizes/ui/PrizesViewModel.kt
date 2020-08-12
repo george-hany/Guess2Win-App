@@ -18,7 +18,7 @@ class PrizesViewModel(var prizesRepo: PrizesRepo) : BaseViewModel<PrizesRepo>(pr
     fun getPrizes() {
         val requestPrizes = prizesRepo.getPrizes()
         prizesMediatorLiveData.addSource(requestPrizes) { response ->
-            prizesUIListLiveData.value = response.prizes?.map { PrizeUIModel.mapResponseToUI(it!!) }
+            prizesUIListLiveData.value = response.data?.map { PrizeUIModel.mapResponseToUI(it!!) }
         }
     }
 }

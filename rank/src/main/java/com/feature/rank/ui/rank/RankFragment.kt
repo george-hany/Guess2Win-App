@@ -25,6 +25,7 @@ const val YEAR = "year"
 class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
     val rankViewModel: RankViewModel by viewModel()
     var opened = false
+    var rankType: RankType? = null
     override fun bindingVariable(): Int = BR.viewModel
 
     override fun layoutId(): Int = R.layout.fragment_rank
@@ -76,7 +77,11 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
 
     private fun selectedDateObserver() {
         rankViewModel.selectedDate.observe(viewLifecycleOwner, Observer {
-            rankViewModel.getRanks()
+            when (rankType) {
+                RankType.WEEK -> rankViewModel.getRanks()
+                RankType.MONTH -> rankViewModel.getRanksByMonth()
+                RankType.YEAR -> rankViewModel.getRanks()
+            }
             viewDataBinding.swipeRefreshLayout.isRefreshing = true
         })
     }
@@ -100,7 +105,7 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser && !opened && baseActivity != null) {
-            val rankType = arguments?.getParcelable<RankType>(RANK_TYPE)
+            rankType = arguments?.getParcelable<RankType>(RANK_TYPE)
             rankViewModel.run {
                 when (rankType) {
                     RankType.WEEK -> {

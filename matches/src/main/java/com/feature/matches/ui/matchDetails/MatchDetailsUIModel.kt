@@ -1,6 +1,7 @@
 package com.feature.matches.ui.matchDetails
 
 import com.core.data.model.matchDetails.MatchDetailsResponseModel
+import com.core.utils.CommonUtils
 
 class MatchDetailsUIModel(
     var matchId: String?,
@@ -11,27 +12,29 @@ class MatchDetailsUIModel(
     var secondTeamName: String?,
     var secondTeamScore: String?,
     var matchTime: String?,
-    var userExpectation: String?,
+    var pridictionNumberGoalsOfTeam1: String?,
+    var pridictionNumberGoalsOfTeam2: String?,
     var points: String?,
     var isMatchStarted: Boolean?,
     var isMatchEnded: Boolean?
 ) {
     companion object {
-        fun mapResponseToUI(matchDetailsResponseModel: MatchDetailsResponseModel): MatchDetailsUIModel {
+        fun mapResponseToUI(matchDetailsResponseModel: MatchDetailsResponseModel.Data): MatchDetailsUIModel {
             matchDetailsResponseModel.run {
                 return MatchDetailsUIModel(
-                    matchId,
-                    firstTeamImage,
-                    firstTeamName,
-                    firstTeamScore,
-                    secondTeamImage,
-                    secondTeamName,
-                    secondTeamScore,
-                    matchTime,
-                    userExpectation,
-                    points,
-                    isMatchStarted,
-                    isMatchEnded
+                    match?.id,
+                    match?.firstTeam?.image,
+                    match?.firstTeam?.name,
+                    match?.noOfFirstTeamGoals,
+                    match?.secondTeam?.image,
+                    match?.secondTeam?.name,
+                    match?.noOfSecondTeamGoals,
+                    CommonUtils.getTime(match?.time ?: ""),
+                    pridictionNumberGoalsOfTeam1,
+                    pridictionNumberGoalsOfTeam2,
+                    point,
+                    match?.isStarted,
+                    match?.isEnded
                 )
             }
         }

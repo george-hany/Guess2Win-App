@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.core.base.BaseFragment
+import com.core.utils.CommonUtils.getEnglishDate
 import com.feature.matches.BR
 import com.feature.matches.R
 import com.feature.matches.databinding.FragmentMatchesBinding
@@ -14,6 +15,7 @@ import com.feature.matches.ui.matches.adapter.MatchesListAdapter
 import com.feature.matches.ui.matches.model.MatchesFragmentModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.core.utils.SpacingItemDecoration
+import com.feature.matches.ui.matches.model.MatchItemUIModel
 
 /**
  * A simple [Fragment] subclass.
@@ -47,9 +49,9 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
             adapter = MatchesListAdapter(arrayListOf())
             matchesRecycler.addItemDecoration(SpacingItemDecoration(0, 0, 20, 20))
             adapter?.matchesListInterface = object : MatchesListAdapter.MatchesListInterface {
-                override fun onClick(matchId: String) {
+                override fun onClick(match: MatchItemUIModel) {
                     val intent = Intent(context, MatchDetailsActivity::class.java)
-                    intent.putExtra(MatchDetailsActivity.MATCH_ID, matchId)
+                    intent.putExtra(MatchDetailsActivity.MATCH_ID, match)
                     startActivity(intent)
                 }
             }
@@ -76,7 +78,7 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
             matchesFragmentModel?.run {
                 matchesViewModel.getLeaguesMatchesByDate(it, leagueId ?: "")
             } ?: kotlin.run {
-                matchesViewModel.getMatchesByDate(it)
+                matchesViewModel.getMatchesByDate(getEnglishDate(it))
             }
             viewDataBinding.swipeRefreshLayout.isRefreshing = true
         })

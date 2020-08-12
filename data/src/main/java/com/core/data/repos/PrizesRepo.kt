@@ -3,6 +3,7 @@ package com.core.data.repos
 import androidx.lifecycle.LiveData
 import com.core.data.MainExceptions
 import com.core.data.base.BaseRepo
+import com.core.data.constant.SharedPrefKeys
 import com.core.data.model.prizes.PrizesResponse
 import com.core.data.network.ApiFactory
 import com.core.data.network.NetworkBoundFileResource
@@ -20,17 +21,18 @@ class PrizesRepo(
     val fileManager: FileManager
 ) : BaseRepo(sharedPreferences, networkFactory) {
     fun getPrizes(): LiveData<PrizesResponse> {
-        networkFactory.setFileName("prizes_response.json")
+//        networkFactory.setFileName("prizes_response.json")
         return object : NetworkBoundFileResource<PrizesResponse>(
             networkFactory,
-            fileManager = null
+            fileName = "prizes_response.json",
+            fileManager = fileManager
         ) {
             override fun convert(json: String): PrizesResponse? {
                 return Gson().fromJson(json, object : TypeToken<PrizesResponse>() {}.type)
             }
 
             override suspend fun createCall(): suspend () -> Response<PrizesResponse> = {
-                apiFactory.getApisHelper().getPrizes().await()
+                apiFactory.getApisHelper().getPrizes(getLanguage()).await()
             }
 
             override fun handleErrorResponseType(response: Response<PrizesResponse>) {}
@@ -40,4 +42,6 @@ class PrizesRepo(
             }
         }.asLiveData()
     }
+
+    fun getLanguage(): String = sharedPreference.getString(SharedPrefKeys.LANGUAGE)
 }

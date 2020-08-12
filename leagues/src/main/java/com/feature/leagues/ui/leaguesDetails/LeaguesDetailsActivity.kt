@@ -1,6 +1,8 @@
 package com.feature.leagues.ui.leaguesDetails
 
 import android.os.Bundle
+import android.util.LayoutDirection
+import android.view.View
 import com.core.base.BaseActivity
 import com.core.utils.CommonUtils
 import com.feature.leagues.BR

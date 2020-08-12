@@ -3,15 +3,19 @@ package com.core.data.model.prizes
 import com.google.gson.annotations.SerializedName
 
 data class PrizesResponse(
-    @SerializedName("prizes")
-    var prizes: List<Prize?>? = null
+    @SerializedName("data")
+    var `data`: List<Data?>? = null
 ) {
-    data class Prize(
-        @SerializedName("description")
-        var description: String? = null,
-        @SerializedName("image")
-        var image: String? = null,
+    class Data(
+        @SerializedName("fromPoint")
+        var fromPoint: Int? = null,
+        @SerializedName("id")
+        var id: Int? = null,
+        @SerializedName("name")
+        var name: String? = null,
+        @SerializedName("toPoint")
+        var toPoint: Int? = null,
         @SerializedName("type")
-        var type: String? = null
+        var type: Int? = null
     )
 }

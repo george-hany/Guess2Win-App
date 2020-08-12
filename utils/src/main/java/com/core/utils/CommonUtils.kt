@@ -66,6 +66,12 @@ object CommonUtils {
         return DATE_PICKER_YYYY_MM_DD_FORMAT.format(date)
     }
 
+    fun getEnglishDate(date: String): String {
+        val DATE_PICKER_YYYY_MM_DD_FORMAT = SimpleDateFormat("yyyy-MM-dd", ENGLISH)
+        val myDate = DATE_PICKER_YYYY_MM_DD_FORMAT.parse(date)
+        return DATE_PICKER_YYYY_MM_DD_FORMAT.format(myDate)
+    }
+
     fun getDateBeforeOrAfter(date: String, days: Int): String {
         val DATE_PICKER_YYYY_MM_DD_FORMAT = SimpleDateFormat("yyyy-MM-dd", getDefault())
         val myDate = DATE_PICKER_YYYY_MM_DD_FORMAT.parse(date)
@@ -73,6 +79,15 @@ object CommonUtils {
         calendar.time = myDate!!
         calendar.add(Calendar.DAY_OF_YEAR, days)
         return DATE_PICKER_YYYY_MM_DD_FORMAT.format(calendar.time)
+    }
+
+    // 2020-08-08T21:00:00
+    fun getTime(date: String): String {
+        val DATE_PICKER_YYYY_MM_DD_T_HH_MM_SS_FORMAT =
+            SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", getDefault())
+        val myDate = DATE_PICKER_YYYY_MM_DD_T_HH_MM_SS_FORMAT.parse(date)
+        val DATE_PICKER_HH_MM_FORMAT = SimpleDateFormat("hh:mm", getDefault())
+        return DATE_PICKER_HH_MM_FORMAT.format(myDate)
     }
 
     fun getFacebookPageURL(context: Context): String? {

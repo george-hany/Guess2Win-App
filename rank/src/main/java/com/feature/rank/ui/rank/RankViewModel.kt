@@ -23,6 +23,14 @@ class RankViewModel(var rankRepo: RankRepo) : BaseViewModel<RankRepo>(rankRepo) 
         }
     }
 
+    fun getRanksByMonth() {
+        val requestRanks = rankRepo.requestRanksByMonth(selectedNum)
+        rankMediatorLiveData.addSource(requestRanks) { response ->
+            ranksUIListLiveData.value =
+                response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
+        }
+    }
+
     fun onPreviousClick() {
         if (selectedNum > 1) {
             selectedDate.value = "$rankUIType ${--selectedNum}"

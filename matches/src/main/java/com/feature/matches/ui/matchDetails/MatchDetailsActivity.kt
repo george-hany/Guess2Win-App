@@ -7,15 +7,16 @@ import com.core.utils.CommonUtils
 import com.feature.matches.BR
 import com.feature.matches.R
 import com.feature.matches.databinding.ActivityMatchDetailsBinding
+import com.feature.matches.ui.matches.model.MatchItemUIModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDetailsViewModel>() {
     val matchDetailsViewModel: MatchDetailsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val matchId = intent.getStringExtra(MATCH_ID)
-        matchDetailsViewModel.getMatchDetails(matchId ?: "")
-        matchDetailsViewModel.matchExpectationRequest.matchId = matchId
+        val match = intent.getParcelableExtra<MatchItemUIModel>(MATCH_ID)
+        matchDetailsViewModel.getMatchDetails(match?.matchId ?: "")
+        matchDetailsViewModel.matchExpectationRequest.matchId = match?.matchId?.toInt()
         matchDetailsMediatorLiveDataObserver()
         matchDetailsUIModelObserver()
         setUpFirstTeamNP()
@@ -24,18 +25,20 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
         backArrowListener()
         setupAdView()
     }
+
     private fun setupAdView() {
         viewDataBinding.adView.run {
             loadAd(CommonUtils.getAdRequest())
         }
     }
+
     private fun backArrowListener() {
         viewDataBinding.backArrow.setOnClickListener { onBackPressed() }
     }
 
     private fun matchExpectationResponseObserver() {
         matchDetailsViewModel.matchExpectationResponse.observe(this, Observer {
-            toast(it.message)
+            showMessage(R.string.expectation_added_successfully)
         })
     }
 
@@ -44,7 +47,7 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
             maxValue = 100
             minValue = 0
             setOnValueChangedListener { picker, oldVal, newVal ->
-                matchDetailsViewModel.matchExpectationRequest.firstTeamScore = newVal.toString()
+                matchDetailsViewModel.matchExpectationRequest.firstTeamScore = newVal
             }
         }
     }
@@ -54,19 +57,17 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
             maxValue = 100
             minValue = 0
             setOnValueChangedListener { picker, oldVal, newVal ->
-                matchDetailsViewModel.matchExpectationRequest.secondTeamScore = newVal.toString()
+                matchDetailsViewModel.matchExpectationRequest.secondTeamScore = newVal
             }
         }
     }
 
     private fun matchDetailsUIModelObserver() {
-        matchDetailsViewModel.matchDetailsUIModel.observe(this, Observer {
-            if (!it.userExpectation.isNullOrEmpty()) {
-                viewDataBinding.firstTeamNP.value =
-                    it?.userExpectation?.split(':')?.get(0)?.toInt() ?: 0
-                viewDataBinding.secondTeamNP.value =
-                    it?.userExpectation?.split(':')?.get(1)?.toInt() ?: 0
-            }
+        matchDetailsViewModel.matchItemUIModel.observe(this, Observer {
+            viewDataBinding.firstTeamNP.value =
+                it?.pridictionNumberGoalsOfTeam1?.toInt() ?: 0
+            viewDataBinding.secondTeamNP.value =
+                it?.pridictionNumberGoalsOfTeam2?.toInt() ?: 0
         })
     }
 
