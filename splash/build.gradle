@@ -75,4 +75,5 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
     implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 }

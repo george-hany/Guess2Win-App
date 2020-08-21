@@ -28,6 +28,7 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     val extraPointsViewModel: ExtraPointsViewModel by viewModel()
     private var mRewardedVideoAd: RewardedVideoAd? = null
     var callBack: CallBack? = null
+    var completeWatchingAd = false
     private lateinit var dialogInfo: Dialog
     private lateinit var dialogBinding: ConfirmAddPointsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +80,7 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
         extraPointsViewModel.checkRewardAdAvailabilityLiveData.observe(
             viewLifecycleOwner,
             Observer {
-                if (it) {
+                if (it.data == true) {
                     if (mRewardedVideoAd?.isLoaded!!) {
                         mRewardedVideoAd?.show()
                     } else
@@ -97,6 +98,10 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     private fun setupRewardedVideoAd() {
         mRewardedVideoAd?.rewardedVideoAdListener = object : RewardedVideoAdListener {
             override fun onRewardedVideoAdClosed() {
+                if (completeWatchingAd) {
+                    extraPointsViewModel.confirmWatchingAd()
+                    completeWatchingAd = false
+                }
                 callBack?.onVideoAdClosed()
             }
 
@@ -111,7 +116,7 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
             }
 
             override fun onRewardedVideoCompleted() {
-                extraPointsViewModel.confirmWatchingAd()
+                completeWatchingAd = true
             }
 
             override fun onRewarded(p0: RewardItem?) {}

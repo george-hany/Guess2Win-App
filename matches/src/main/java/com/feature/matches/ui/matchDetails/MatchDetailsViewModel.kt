@@ -6,7 +6,6 @@ import com.core.base.BaseViewModel
 import com.core.data.model.matchDetails.MatchExpectationRequest
 import com.core.data.model.matchDetails.MatchExpectationResponse
 import com.core.data.repos.MatchDetailsRepo
-import com.feature.matches.ui.matches.model.MatchItemUIModel
 
 class MatchDetailsViewModel(var matchDetailsRepo: MatchDetailsRepo) :
     BaseViewModel<MatchDetailsRepo>(matchDetailsRepo) {

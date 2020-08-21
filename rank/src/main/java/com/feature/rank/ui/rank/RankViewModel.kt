@@ -7,24 +7,57 @@ import com.core.data.repos.RankRepo
 import com.feature.rank.ui.rank.model.RanksItemUIModel
 
 class RankViewModel(var rankRepo: RankRepo) : BaseViewModel<RankRepo>(rankRepo) {
-    val selectedDate = MutableLiveData<String>()
-    var selectedNum = 1
+    val selectedDate = MutableLiveData<String?>(null)
+    var selectedNum = 0
     var rankUIType = ""
     var rankNetworkType = ""
     val rankMediatorLiveData = MediatorLiveData<Any>()
     val ranksUIListLiveData = MutableLiveData<List<RanksItemUIModel>>()
     val userId = rankRepo.getLoginResponseFromSharedPref().user?.id
+    val idsListLiveData = MutableLiveData<List<Int>>()
 
-    fun getRanks() {
-        val requestRanks = rankRepo.requestRanksList(rankNetworkType, selectedNum)
-        rankMediatorLiveData.addSource(requestRanks) { response ->
-            ranksUIListLiveData.value =
-                response.ranks?.map { RanksItemUIModel.mapResponseToUI(it!!) }
+    fun getMonths() {
+        val requestMonths = rankRepo.requestMonths()
+        rankMediatorLiveData.addSource(requestMonths) { list ->
+            idsListLiveData.value = list.map { it.id }
         }
     }
 
     fun getRanksByMonth() {
-        val requestRanks = rankRepo.requestRanksByMonth(selectedNum)
+        val requestRanks =
+            rankRepo.requestRanksByMonth(idsListLiveData.value?.get(selectedNum) ?: 0)
+        rankMediatorLiveData.addSource(requestRanks) { response ->
+            ranksUIListLiveData.value =
+                response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
+        }
+    }
+
+    fun getWeeks() {
+        val requestMonths = rankRepo.requestWeeks()
+        rankMediatorLiveData.addSource(requestMonths) { list ->
+            idsListLiveData.value = list.map { it.id }
+        }
+    }
+
+    fun getRanksByWeek() {
+        val requestRanks =
+            rankRepo.requestRanksByWeek(idsListLiveData.value?.get(selectedNum) ?: 0)
+        rankMediatorLiveData.addSource(requestRanks) { response ->
+            ranksUIListLiveData.value =
+                response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
+        }
+    }
+
+    fun getSeasons() {
+        val requestMonths = rankRepo.requestSeasons()
+        rankMediatorLiveData.addSource(requestMonths) { list ->
+            idsListLiveData.value = list.map { it.id }
+        }
+    }
+
+    fun getRanksBySeason() {
+        val requestRanks =
+            rankRepo.requestRanksBySeason(idsListLiveData.value?.get(selectedNum) ?: 0)
         rankMediatorLiveData.addSource(requestRanks) { response ->
             ranksUIListLiveData.value =
                 response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
@@ -32,12 +65,13 @@ class RankViewModel(var rankRepo: RankRepo) : BaseViewModel<RankRepo>(rankRepo) 
     }
 
     fun onPreviousClick() {
-        if (selectedNum > 1) {
-            selectedDate.value = "$rankUIType ${--selectedNum}"
+        if (selectedNum > 0) {
+            selectedDate.value = "$rankUIType ${idsListLiveData.value?.get(--selectedNum)}"
         }
     }
 
     fun onNextClick() {
-        selectedDate.value = "$rankUIType ${++selectedNum}"
+        if (selectedNum < idsListLiveData.value?.size!! - 1)
+            selectedDate.value = "$rankUIType ${idsListLiveData.value?.get(++selectedNum)}"
     }
 }

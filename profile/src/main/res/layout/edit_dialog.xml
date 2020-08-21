@@ -94,7 +94,6 @@
             android:background="@color/shapes"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:onClick="@{()->viewModel.savePhone()}"
             android:text="@string/save"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_12sdp"

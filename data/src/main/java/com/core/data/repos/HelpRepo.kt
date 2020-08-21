@@ -45,5 +45,4 @@ class HelpRepo(
     }
 
     fun getLanguage(): String = sharedPreference.getString(SharedPrefKeys.LANGUAGE)
-
 }

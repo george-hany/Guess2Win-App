@@ -3,12 +3,13 @@ package com.feature.extrapoints.ui
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.core.base.BaseViewModel
+import com.core.data.model.extraPoints.CheckWatchAdAvailabilityResponseModel
 import com.core.data.repos.ExtraPointsRepo
 
 class ExtraPointsViewModel(var extraPointsRepo: ExtraPointsRepo) :
     BaseViewModel<ExtraPointsRepo>(extraPointsRepo) {
     val extraPointsMediatorLiveData = MediatorLiveData<Any>()
-    val checkRewardAdAvailabilityLiveData = MutableLiveData<Boolean>()
+    val checkRewardAdAvailabilityLiveData = MutableLiveData<CheckWatchAdAvailabilityResponseModel>()
     val confirmWatchingRewardAd = MutableLiveData<Boolean>()
 
     fun checkRewardAdAvailability() {
@@ -20,10 +21,10 @@ class ExtraPointsViewModel(var extraPointsRepo: ExtraPointsRepo) :
         }
     }
 
-    fun confirmWatchingAd(){
+    fun confirmWatchingAd() {
         setIsLoading(true)
         val requestConfirmWatchingAd = extraPointsRepo.confirmWatchingAd()
-        extraPointsMediatorLiveData.addSource(requestConfirmWatchingAd){
+        extraPointsMediatorLiveData.addSource(requestConfirmWatchingAd) {
             confirmWatchingRewardAd.value = true
             setIsLoading(false)
         }

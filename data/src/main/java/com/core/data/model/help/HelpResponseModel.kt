@@ -1,6 +1,5 @@
 package com.core.data.model.help
 
-
 import com.google.gson.annotations.SerializedName
 
 data class HelpResponseModel(

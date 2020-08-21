@@ -1,5 +1,6 @@
 package com.core.data.network.interfaces
 
+import com.core.data.model.extraPoints.CheckWatchAdAvailabilityResponseModel
 import com.core.data.model.extraPoints.ConfirmWatchingAdResponseModel
 import com.core.data.model.help.HelpResponseModel
 import com.core.data.model.leagues.LeaguesListResponseModel
@@ -12,7 +13,7 @@ import com.core.data.model.matchDetails.MatchExpectationResponse
 import com.core.data.model.matches.MatchesResponseModel
 import com.core.data.model.prizes.PrizesResponse
 import com.core.data.model.profile.ChangePhoneRequest
-import com.core.data.model.profile.ChangePhoneResponse
+import com.core.data.model.rank.MonthResponseModel
 import com.core.data.model.rank.RankByMonthResponseModel
 import com.core.data.model.rank.RankResponseModel
 import kotlinx.coroutines.Deferred
@@ -49,8 +50,8 @@ interface ApisHelper {
         @Query("date") date: String
     ): Deferred<Response<MatchesResponseModel>>
 
-    @GET("")
-    fun getLeaguesRank(leagueId: String): Deferred<Response<LeaguesRankResponseModel>>
+    @GET("OrderByBriodicals/{leagueId}")
+    fun getLeaguesRank(@Path("leagueId") leagueId: String): Deferred<Response<List<LeaguesRankResponseModel>>>
 
     @GET("OrderByMonths/1")
     fun getRanks(type: String, selectedNum: Int): Deferred<Response<RankResponseModel>>
@@ -58,20 +59,35 @@ interface ApisHelper {
     @GET("OrderByMonths/{selectedNum}")
     fun getRanksByMonth(@Path("selectedNum") selectedNum: Int): Deferred<Response<List<RankByMonthResponseModel>>>
 
+    @GET("Months")
+    fun getMonths(): Deferred<Response<List<MonthResponseModel>>>
+
+    @GET("Weeks")
+    fun getWeeks(): Deferred<Response<List<MonthResponseModel>>>
+
+    @GET("OrderByWeeks/{selectedNum}")
+    fun getRanksByWeek(@Path("selectedNum") selectedNum: Int): Deferred<Response<List<RankByMonthResponseModel>>>
+
+    @GET("Seasons")
+    fun getSeasons(): Deferred<Response<List<MonthResponseModel>>>
+
+    @GET("OrderBySeason/{selectedNum}")
+    fun getRanksBySeason(@Path("selectedNum") selectedNum: Int): Deferred<Response<List<RankByMonthResponseModel>>>
+
     @POST("Account/LoginWithFacebook")
     fun login(@Body loginRequest: LoginRequest): Deferred<Response<LoginResponse>>
 
     @GET("Awards/GetAwards/{lang}")
     fun getPrizes(@Path("lang") lang: String): Deferred<Response<PrizesResponse>>
 
-    @POST("")
-    fun changePhone(changePhoneRequest: ChangePhoneRequest): Deferred<Response<ChangePhoneResponse>>
+    @POST("Account/UpdateFacebookUser")
+    fun changePhone(@Body changePhoneRequest: ChangePhoneRequest): Deferred<Response<LoginResponse>>
 
     @GET("Helpers/GetHeplers/{lang}")
     fun getHelpsList(@Path("lang") lang: String): Deferred<Response<HelpResponseModel>>
 
     @GET("AdvertisementScores/checkAdvertisementAvilabal")
-    fun checkRewardAdAvailability(@Query("userid") userid: String): Deferred<Response<Boolean>>
+    fun checkRewardAdAvailability(@Query("userid") userid: String): Deferred<Response<CheckWatchAdAvailabilityResponseModel>>
 
     @GET("AdvertisementScores/wachAdvertisement")
     fun confirmWatchingRewardAd(@Query("userId") userId: String): Deferred<Response<ConfirmWatchingAdResponseModel>>

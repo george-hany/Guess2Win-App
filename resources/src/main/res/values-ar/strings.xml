@@ -52,6 +52,8 @@
     <string name="season">موسم</string>
     <string name="you_can_watch_only_two_videos_per_day_come_back_tomorrow">يمكنك مشاهدة مقطعي فيديو فقط يوميًا ، تعال غدًا</string>
     <string name="video_is_not_ready_try_again_later">الفيديو ليس جاهزًا حاول مرة أخرى لاحقًا</string>
-    <string name="congratulations_n_you_got_5_points">Congratulations \n you got 5 points</string>
-    <string name="done">Done</string>
+    <string name="congratulations_n_you_got_5_points">تهانينا \n لقد حصلت على 5 نقاط</string>
+    <string name="done">تم</string>
+    <string name="phone_changed_successfully">تم تغيير رقم الهاتف بنجاح</string>
+    <string name="expectation_added_successfully">تم إضافة التوقع بنجاح</string>
 </resources>

@@ -7,17 +7,15 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.core.base.BaseFragment
 import com.core.utils.AppConstant
-import com.core.utils.AppConstant.InterstitialId
 import com.core.utils.AppConstant.loginRequest
 import com.feature.login.ui.LoginFragment
 import com.feature.splash.BR
 import com.feature.splash.R
 import com.feature.splash.databinding.FragmentSplashBinding
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 
 class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
@@ -25,29 +23,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
     private lateinit var mInterstitialAd: InterstitialAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setupInterstitialAd()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         setupAppEnvironment()
-    }
-
-    private fun setupInterstitialAd() {
-        mInterstitialAd = InterstitialAd(context)
-        mInterstitialAd.adUnitId = InterstitialId
-        mInterstitialAd.loadAd(
-            AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
-        )
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
-                navigateToUriWithClearStack(R.string.board)
-                mInterstitialAd.loadAd(
-                    AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
-                )
-            }
-        }
     }
 
     override fun bindingVariable(): Int {
@@ -65,6 +45,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         splashTimeOutObservation()
+        displaySplashIcon()
+    }
+
+    private fun displaySplashIcon() {
+        Glide.with(requireContext()).load(R.drawable.logo).into(viewDataBinding.icon)
     }
 
     private fun splashTimeOutObservation() {

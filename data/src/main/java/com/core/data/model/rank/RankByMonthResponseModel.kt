@@ -1,6 +1,5 @@
 package com.core.data.model.rank
 
-
 import com.google.gson.annotations.SerializedName
 
 data class RankByMonthResponseModel(

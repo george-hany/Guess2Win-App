@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.core.data.MainExceptions
 import com.core.data.base.BaseRepo
 import com.core.data.constant.SharedPrefKeys
+import com.core.data.model.extraPoints.CheckWatchAdAvailabilityResponseModel
 import com.core.data.model.extraPoints.ConfirmWatchingAdResponseModel
 import com.core.data.model.login.LoginResponse
 import com.core.data.network.ApiFactory
@@ -22,17 +23,17 @@ class ExtraPointsRepo(
     networkFactory: NetworkFactoryInterface,
     val fileManager: FileManager
 ) : BaseRepo(sharedPreferences, networkFactory) {
-    fun requestRewardAdAvailability(): LiveData<Boolean> {
-        return object : NetworkBoundFileResource<Boolean>(
+    fun requestRewardAdAvailability(): LiveData<CheckWatchAdAvailabilityResponseModel> {
+        return object : NetworkBoundFileResource<CheckWatchAdAvailabilityResponseModel>(
             networkFactory,
             DataStrategy.Strategies.NETWORK_ONLY,
             fileManager = fileManager
         ) {
-            override fun convert(json: String): Boolean? {
-                return Gson().fromJson(json, object : TypeToken<Boolean>() {}.type)
+            override fun convert(json: String): CheckWatchAdAvailabilityResponseModel? {
+                return Gson().fromJson(json, object : TypeToken<CheckWatchAdAvailabilityResponseModel>() {}.type)
             }
 
-            override suspend fun createCall(): suspend () -> Response<Boolean> = {
+            override suspend fun createCall(): suspend () -> Response<CheckWatchAdAvailabilityResponseModel> = {
                 apiFactory.getApisHelper()
                     .checkRewardAdAvailability(getLoginResponse().user?.id ?: "").await()
             }
@@ -41,7 +42,7 @@ class ExtraPointsRepo(
                 exceptionMessage.value = exception.exception
             }
 
-            override fun handleErrorResponseType(response: Response<Boolean>) {
+            override fun handleErrorResponseType(response: Response<CheckWatchAdAvailabilityResponseModel>) {
                 exceptionMessage.value = response.message()
             }
         }.asLiveData()

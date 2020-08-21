@@ -11,10 +11,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/container"
         android:background="?android:attr/colorBackground">
+
         <TextView
             android:id="@+id/index"
             android:layout_width="wrap_content"
@@ -25,27 +26,29 @@
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
             tools:text="1-" />
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/barca"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:image="@{model.image}"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintStart_toEndOf="@id/index"
-            android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="@id/top_guideline"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0"
+            tools:src="@drawable/barca" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:fontFamily="@font/roboto_medium"
             android:text="@{model.name}"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/_11ssp"
-            android:layout_marginEnd="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintEnd_toStartOf="@id/rank"
             app:layout_constraintHorizontal_chainStyle="spread_inside"

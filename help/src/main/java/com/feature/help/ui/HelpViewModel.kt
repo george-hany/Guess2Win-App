@@ -21,5 +21,4 @@ class HelpViewModel(var helpRepo: HelpRepo) : BaseViewModel<HelpRepo>(helpRepo) 
                 response.data?.map { HelpItemModel.mapResponseToUI(it!!) }
         }
     }
-
 }

@@ -19,7 +19,7 @@ class MatchItemUIModel(
     var points: String?,
     var isMatchStarted: Boolean?,
     var isMatchEnded: Boolean?
-) : Parcelable{
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -65,6 +65,7 @@ class MatchItemUIModel(
         override fun newArray(size: Int): Array<MatchItemUIModel?> {
             return arrayOfNulls(size)
         }
+
         fun mapResponseToUI(model: MatchesResponseModel.Data): MatchItemUIModel {
             model.run {
                 return MatchItemUIModel(

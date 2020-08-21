@@ -110,7 +110,7 @@ val reposModules = module {
     fun provideLeaguesRankRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): LeaguesRankRepo {
         return LeaguesRankRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -140,7 +140,7 @@ val reposModules = module {
     fun provideProfileRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): ProfileRepo {
         return ProfileRepo(apiFactory, sharedPreference, networkFactory, fileManager)

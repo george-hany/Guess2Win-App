@@ -56,4 +56,5 @@
     <string name="congratulations_n_you_got_5_points">Congratulations \n you got 5 points</string>
     <string name="done">Done</string>
     <string name="expectation_added_successfully">Expectation added successfully</string>
+    <string name="phone_changed_successfully">Phone Changed Successfully</string>
 </resources>

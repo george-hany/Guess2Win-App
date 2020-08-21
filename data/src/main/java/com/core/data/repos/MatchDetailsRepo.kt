@@ -8,7 +8,6 @@ import com.core.data.model.login.LoginResponse
 import com.core.data.model.matchDetails.MatchDetailsResponseModel
 import com.core.data.model.matchDetails.MatchExpectationRequest
 import com.core.data.model.matchDetails.MatchExpectationResponse
-import com.core.data.model.matches.MatchesResponseModel
 import com.core.data.network.ApiFactory
 import com.core.data.network.NetworkBoundFileResource
 import com.core.data.strategy.DataStrategy
@@ -80,7 +79,6 @@ class MatchDetailsRepo(
             }
         }.asLiveData()
     }
-
 
     fun getLoginResponse(): LoginResponse = Gson().fromJson(
         sharedPreference.getString(SharedPrefKeys.LOGIN_DATA),
