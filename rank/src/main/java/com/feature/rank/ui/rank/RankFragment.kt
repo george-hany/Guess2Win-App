@@ -25,6 +25,7 @@ const val YEAR = "year"
 class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
     val rankViewModel: RankViewModel by viewModel()
     var opened = false
+    var rankType: RankType? = null
     override fun bindingVariable(): Int = BR.viewModel
 
     override fun layoutId(): Int = R.layout.fragment_rank
@@ -37,11 +38,42 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        receiveArguments()
         setupRanksRecycler()
         selectedDateObserver()
         rankMediatorLiveDataObserver()
         ranksUIListLiveDataObserver()
         swipeRefreshLayoutListener()
+        idsListLiveDataObserver()
+    }
+
+    private fun idsListLiveDataObserver() {
+        rankViewModel.run {
+            idsListLiveData.observe(viewLifecycleOwner, Observer {
+                selectedDate.value = "$rankUIType ${it[selectedNum]}"
+            })
+        }
+    }
+
+    private fun receiveArguments() {
+        rankType = arguments?.getParcelable<RankType>(RANK_TYPE)
+        rankViewModel.run {
+            when (rankType) {
+                RankType.WEEK -> {
+                    rankUIType = getString(R.string.week)
+                    getWeeks()
+                }
+                RankType.MONTH -> {
+                    rankUIType = getString(R.string.month)
+                    getMonths()
+                }
+                RankType.YEAR -> {
+                    rankUIType = getString(R.string.year)
+                    getSeasons()
+                }
+            }
+//            selectedDate.value = "$rankUIType $selectedNum"
+        }
     }
 
     private fun swipeRefreshLayoutListener() {
@@ -76,7 +108,11 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
 
     private fun selectedDateObserver() {
         rankViewModel.selectedDate.observe(viewLifecycleOwner, Observer {
-            rankViewModel.getRanks()
+            when (rankType) {
+                RankType.WEEK -> rankViewModel.getRanksByWeek()
+                RankType.MONTH -> rankViewModel.getRanksByMonth()
+                RankType.YEAR -> rankViewModel.getRanksBySeason()
+            }
             viewDataBinding.swipeRefreshLayout.isRefreshing = true
         })
     }
@@ -97,30 +133,30 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
         userVisibleHint = true
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser && !opened && baseActivity != null) {
-            val rankType = arguments?.getParcelable<RankType>(RANK_TYPE)
-            rankViewModel.run {
-                when (rankType) {
-                    RankType.WEEK -> {
-                        rankUIType = getString(R.string.week)
-                        rankNetworkType = WEEK
-                    }
-                    RankType.MONTH -> {
-                        rankUIType = getString(R.string.month)
-                        rankNetworkType = MONTH
-                    }
-                    RankType.YEAR -> {
-                        rankUIType = getString(R.string.year)
-                        rankNetworkType = YEAR
-                    }
-                }
-                selectedDate.value = "$rankUIType $selectedNum"
-            }
-            opened = true
-        }
-    }
+//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+//        super.setUserVisibleHint(isVisibleToUser)
+//        if (isVisibleToUser && !opened && baseActivity != null) {
+//            rankType = arguments?.getParcelable<RankType>(RANK_TYPE)
+//            rankViewModel.run {
+//                when (rankType) {
+//                    RankType.WEEK -> {
+//                        rankUIType = getString(R.string.week)
+//                        rankNetworkType = WEEK
+//                    }
+//                    RankType.MONTH -> {
+//                        rankUIType = getString(R.string.month)
+//                        rankNetworkType = MONTH
+//                    }
+//                    RankType.YEAR -> {
+//                        rankUIType = getString(R.string.year)
+//                        rankNetworkType = YEAR
+//                    }
+//                }
+//                selectedDate.value = "$rankUIType $selectedNum"
+//            }
+//            opened = true
+//        }
+//    }
 
     override fun handleError() {
         viewDataBinding.swipeRefreshLayout.isRefreshing = false

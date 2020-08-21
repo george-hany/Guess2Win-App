@@ -47,4 +47,14 @@
     <string name="phone">Phone</string>
     <string name="phone_number">Phone Number</string>
     <string name="add_your_phone_number">Add your phone number</string>
+    <string name="help">Help</string>
+    <string name="from_level">from level:</string>
+    <string name="to_level">to level:</string>
+    <string name="season">Season</string>
+    <string name="you_can_watch_only_two_videos_per_day_come_back_tomorrow">you can watch only two videos per day, come back tomorrow</string>
+    <string name="video_is_not_ready_try_again_later">video is not ready try again later</string>
+    <string name="congratulations_n_you_got_5_points">Congratulations \n you got 5 points</string>
+    <string name="done">Done</string>
+    <string name="expectation_added_successfully">Expectation added successfully</string>
+    <string name="phone_changed_successfully">Phone Changed Successfully</string>
 </resources>

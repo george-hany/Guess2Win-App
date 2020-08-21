@@ -24,7 +24,7 @@ import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
 
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivityBase() {
 
-    private var mProgressDialog: CustomProgressDialog? = CustomProgressDialog()
+    private var mProgressDialog: CustomProgressDialog = CustomProgressDialog()
     lateinit var viewDataBinding: T
     lateinit var mViewModel: V
 
@@ -109,8 +109,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     fun hideLoading() {
-        if (mProgressDialog != null && mProgressDialog!!.dialog?.isShowing!!) {
-            mProgressDialog!!.dialog?.dismiss()
+        mProgressDialog.dialog?.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
         }
     }
 

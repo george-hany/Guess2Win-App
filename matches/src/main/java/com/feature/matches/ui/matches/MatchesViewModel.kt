@@ -21,7 +21,7 @@ class MatchesViewModel(var matchesRepo: MatchesRepo) : BaseViewModel<MatchesRepo
         val requestMatches = matchesRepo.requestMatchesByDate(date)
         matchesMediatorLiveData.addSource(requestMatches) { response ->
             matchesListLiveData.value =
-                response.result?.match?.map { MatchItemUIModel.mapResponseToUI(it!!) }
+                response.data?.map { MatchItemUIModel.mapResponseToUI(it!!) }
             matchesMediatorLiveData.removeSource(requestMatches)
         }
     }
@@ -30,7 +30,7 @@ class MatchesViewModel(var matchesRepo: MatchesRepo) : BaseViewModel<MatchesRepo
         val requestMatches = matchesRepo.requestLeaguesMatchesByDate(date, leaguesId)
         matchesMediatorLiveData.addSource(requestMatches) { response ->
             matchesListLiveData.value =
-                response.result?.match?.map { MatchItemUIModel.mapResponseToUI(it!!) }
+                response.data?.map { MatchItemUIModel.mapResponseToUI(it!!) }
         }
     }
 

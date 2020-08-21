@@ -35,12 +35,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         dialogInfo.requestWindowFeature(Window.FEATURE_NO_TITLE)
         editButtonListener()
         changePasswordSuccessObserver()
+        profileMediatorLiveDataObserver()
+    }
+
+    private fun profileMediatorLiveDataObserver() {
+        profileViewModel.profileMediatorLiveData.observe(viewLifecycleOwner, Observer {})
     }
 
     private fun changePasswordSuccessObserver() {
         profileViewModel.changePasswordSuccess.observe(viewLifecycleOwner, Observer {
             if (it) {
-                activity?.toast("Phone Changed Successfully")
+                activity?.toast(getString(R.string.phone_changed_successfully))
                 dialogInfo.dismiss()
             }
         })
@@ -73,6 +78,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         phoneNumberErrorObserver()
         builder.setView(dialogBinding.root)
         dialogInfo = builder.create()
+        dialogBinding.save.setOnClickListener {
+            setPhoneValidation()
+            profileViewModel.savePhone()
+        }
         dialogBinding.cancel.setOnClickListener {
             dialogInfo.dismiss()
         }
@@ -83,17 +92,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         dialogInfo.show()
     }
 
+    private fun setPhoneValidation() {
+        profileViewModel.isValidNumber = dialogBinding.ccpGetFullNumber.isValidFullNumber
+        profileViewModel.changePhoneRequest.phone =
+            dialogBinding.ccpGetFullNumber.fullNumberWithPlus
+    }
+
     fun setUpCCP() {
-        dialogBinding.ccpGetFullNumber.detectNetworkCountry(true)
-        dialogBinding.ccpGetFullNumber.detectSIMCountry(true)
-        dialogBinding.ccpGetFullNumber.showNameCode(false)
-        dialogBinding.ccpGetFullNumber.detectLocaleCountry(true)
-        dialogBinding.ccpGetFullNumber.registerCarrierNumberEditText(dialogBinding.phoneNumber)
-        dialogBinding.ccpGetFullNumber.setPhoneNumberValidityChangeListener { isValidNumber ->
-            profileViewModel.isValidNumber = isValidNumber
-            if (isValidNumber)
-                profileViewModel.changePhoneRequest.phoneNumber =
-                    dialogBinding.ccpGetFullNumber.fullNumberWithPlus
+        dialogBinding.ccpGetFullNumber.run {
+            detectNetworkCountry(true)
+            detectSIMCountry(true)
+            showNameCode(false)
+            detectLocaleCountry(true)
+            registerCarrierNumberEditText(dialogBinding.phoneNumber)
+            fullNumber = profileViewModel.loginResponse.value?.user?.phoneNumber
         }
     }
 

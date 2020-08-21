@@ -17,9 +17,18 @@ class ProfileViewModel(var profileRepo: ProfileRepo) : BaseViewModel<ProfileRepo
     fun savePhone() {
         if (!validate())
             return
+        loginResponse.value?.user?.run {
+            changePhoneRequest.clientId = clientId
+            changePhoneRequest.name = userName
+            changePhoneRequest.image = image
+        }
+        setIsLoading(true)
         val requestChangePhone = profileRepo.changePhone(changePhoneRequest)
         profileMediatorLiveData.addSource(requestChangePhone) {
+            loginResponse.value = it
+            profileRepo.saveLoginResponseInSharedPref(it)
             changePasswordSuccess.value = true
+            setIsLoading(false)
         }
     }
 

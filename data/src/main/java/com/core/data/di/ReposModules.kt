@@ -70,7 +70,7 @@ val reposModules = module {
     fun provideMatchesRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): MatchesRepo {
         return MatchesRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -80,7 +80,7 @@ val reposModules = module {
     fun provideMatchDetailsRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): MatchDetailsRepo {
         return MatchDetailsRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -110,7 +110,7 @@ val reposModules = module {
     fun provideLeaguesRankRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): LeaguesRankRepo {
         return LeaguesRankRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -130,7 +130,7 @@ val reposModules = module {
     fun provideRankRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): RankRepo {
         return RankRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -140,7 +140,7 @@ val reposModules = module {
     fun provideProfileRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): ProfileRepo {
         return ProfileRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -160,7 +160,7 @@ val reposModules = module {
     fun provideExtraPointsRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): ExtraPointsRepo {
         return ExtraPointsRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -170,7 +170,7 @@ val reposModules = module {
     fun providePrizesRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): PrizesRepo {
         return PrizesRepo(apiFactory, sharedPreference, networkFactory, fileManager)
@@ -180,7 +180,7 @@ val reposModules = module {
     fun provideHelpRepo(
         apiFactory: ApiFactory,
         sharedPreference: AppSharedPreference,
-        networkFactory: MockedNetwork,
+        networkFactory: NetworkFactory,
         fileManager: FileManager
     ): HelpRepo {
         return HelpRepo(apiFactory, sharedPreference, networkFactory, fileManager)

@@ -26,7 +26,7 @@ class MatchesListAdapter(var matchesList: ArrayList<MatchItemUIModel>) :
         holder.onBind(position)
         holder.itemView.setOnClickListener {
             matchesListInterface.onClick(
-                matchesList[position].matchId ?: ""
+                matchesList[position]
             )
         }
     }
@@ -39,6 +39,6 @@ class MatchesListAdapter(var matchesList: ArrayList<MatchItemUIModel>) :
     }
 
     interface MatchesListInterface {
-        fun onClick(matchId: String)
+        fun onClick(match: MatchItemUIModel)
     }
 }

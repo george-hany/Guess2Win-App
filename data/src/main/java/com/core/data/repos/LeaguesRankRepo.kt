@@ -21,25 +21,29 @@ class LeaguesRankRepo(
     networkFactory: NetworkFactoryInterface,
     val fileManager: FileManager
 ) : BaseRepo(sharedPreferences, networkFactory) {
-    fun requestLeaguesRankList(leagueId: String): LiveData<LeaguesRankResponseModel> {
-        this.networkFactory.setFileName("leagues_rank_response.json")
-        return object : NetworkBoundFileResource<LeaguesRankResponseModel>(
+    fun requestLeaguesRankList(leagueId: String): LiveData<List<LeaguesRankResponseModel>> {
+//        this.networkFactory.setFileName("leagues_rank_response.json")
+        return object : NetworkBoundFileResource<List<LeaguesRankResponseModel>>(
             networkFactory,
+            fileName = "leagues_rank_response$leagueId.json",
             fileManager = fileManager
         ) {
-            override fun convert(json: String): LeaguesRankResponseModel? {
-                return Gson().fromJson(json, object : TypeToken<LeaguesRankResponseModel>() {}.type)
+            override fun convert(json: String): List<LeaguesRankResponseModel>? {
+                return Gson().fromJson(
+                    json,
+                    object : TypeToken<List<LeaguesRankResponseModel>>() {}.type
+                )
             }
 
-            override suspend fun createCall(): suspend () -> Response<LeaguesRankResponseModel> = {
-                apiFactory.getApisHelper().getLeaguesRank(leagueId).await()
-            }
+            override suspend fun createCall(): suspend () -> Response<List<LeaguesRankResponseModel>> = {
+                    apiFactory.getApisHelper().getLeaguesRank(leagueId).await()
+                }
 
             override fun onFetchFailed(exception: MainExceptions) {
                 exceptionMessage.value = exception.exception
             }
 
-            override fun handleErrorResponseType(response: Response<LeaguesRankResponseModel>) {}
+            override fun handleErrorResponseType(response: Response<List<LeaguesRankResponseModel>>) {}
         }.asLiveData()
     }
 

@@ -56,6 +56,7 @@ class LoginFragment : BaseActivity<FragmentLoginBinding, LoginViewModel>() {
             LoginManager.getInstance()
                 .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
+                        loginViewModel.setIsLoading(true)
                         loginViewModel.getUserProfile(AccessToken.getCurrentAccessToken())
                     }
 

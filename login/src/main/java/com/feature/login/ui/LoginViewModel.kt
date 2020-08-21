@@ -19,7 +19,6 @@ class LoginViewModel(private val loginRepo: LoginRepo) : BaseViewModel<LoginRepo
             currentAccessToken
         ) { `object`, _ ->
             try {
-                setIsLoading(true)
                 val firstName = `object`.getString("first_name")
                 val lastName = `object`.getString("last_name")
                 val id = `object`.getString("id")

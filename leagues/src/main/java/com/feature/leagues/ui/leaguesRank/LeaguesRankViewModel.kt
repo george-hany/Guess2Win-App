@@ -16,7 +16,7 @@ class LeaguesRankViewModel(var leaguesRankRepo: LeaguesRankRepo) :
         val requestRanks = leaguesRankRepo.requestLeaguesRankList(leagueId)
         leaguesRankMediatorLiveData.addSource(requestRanks) { response ->
             ranksUIListLiveData.value =
-                response.ranks?.map { RankItemUIModel.mapResponseToUI(it!!) }
+                response?.map { RankItemUIModel.mapResponseToUI(it) }
         }
     }
 }
