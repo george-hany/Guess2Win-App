@@ -53,6 +53,7 @@ class CustomProgressDialog {
 
         dialog = CustomDialog(context)
         dialog?.setContentView(view.root)
+        dialog?.setCancelable(false)
         dialog?.show()
         return dialog!!
     }
