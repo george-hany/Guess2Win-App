@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.core.base.BaseFragment
 import com.core.utils.AppConstant
@@ -45,11 +44,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         splashTimeOutObservation()
-        displaySplashIcon()
-    }
-
-    private fun displaySplashIcon() {
-        Glide.with(requireContext()).load(R.drawable.logo).into(viewDataBinding.icon)
     }
 
     private fun splashTimeOutObservation() {

@@ -137,6 +137,20 @@
                 app:layout_constraintVertical_bias="1"
                 tools:text="season" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/league"
+                android:textColor="@color/darckOrange"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{model.type == 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintStart_toStartOf="@id/description"
+                app:layout_constraintTop_toBottomOf="@id/text"
+                app:layout_constraintVertical_bias="1"
+                tools:text="season" />
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/top_guideline"
                 android:layout_width="wrap_content"

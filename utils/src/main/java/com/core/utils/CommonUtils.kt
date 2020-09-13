@@ -115,7 +115,7 @@ object CommonUtils {
     }
 
     fun getAdRequest(): AdRequest =
-        AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
+        AdRequest.Builder().build()
 
     fun getRewardedVideoAd(context: Context): RewardedVideoAd {
         val mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context)
