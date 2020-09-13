@@ -9,10 +9,12 @@ import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import org.json.JSONException
 import com.core.data.model.login.LoginRequest
+import com.google.firebase.messaging.FirebaseMessaging
 
 class LoginViewModel(private val loginRepo: LoginRepo) : BaseViewModel<LoginRepo>(loginRepo) {
     val loginFinished = MutableLiveData(false)
     var loginMediatorLiveData: MediatorLiveData<Any> = MediatorLiveData()
+    val loginRequest = LoginRequest()
 
     fun getUserProfile(currentAccessToken: AccessToken) {
         val request = GraphRequest.newMeRequest(
@@ -24,11 +26,10 @@ class LoginViewModel(private val loginRepo: LoginRepo) : BaseViewModel<LoginRepo
                 val id = `object`.getString("id")
                 val imageUrl =
                     "https://graph.facebook.com/$id/picture?type=normal"
-                val loginRequest = LoginRequest()
                 loginRequest.Name = "$firstName $lastName"
                 loginRequest.ClientId = id
                 loginRequest.Image = imageUrl
-                login(loginRequest)
+                subscribeToTopic()
             } catch (e: JSONException) {
                 message.value = e.printStackTrace()
                 setIsLoading(false)
@@ -50,4 +51,16 @@ class LoginViewModel(private val loginRepo: LoginRepo) : BaseViewModel<LoginRepo
     }
 
     fun isLoggedIn() = loginRepo.isLoggedIn()
+
+    fun subscribeToTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic("global")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    login(loginRequest)
+                } else {
+                    message.value = task.exception?.message
+                    setIsLoading(false)
+                }
+            }
+    }
 }

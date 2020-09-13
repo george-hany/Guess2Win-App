@@ -56,4 +56,5 @@
     <string name="done">تم</string>
     <string name="phone_changed_successfully">تم تغيير رقم الهاتف بنجاح</string>
     <string name="expectation_added_successfully">تم إضافة التوقع بنجاح</string>
+    <string name="league">دوري</string>
 </resources>
