@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.feature.splash.ui.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <deepLink
+            android:id="@+id/deepLink3"
+            app:uri="@string/splash" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLanguageFragment"
+        android:name="com.feature.choose_language.ui.ChooseLanguageFragment"
+        android:label="ChooseLanguageFragment"
+        tools:layout="@layout/fragment_choose_language">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="@string/chooseLanguage" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseThemeFragment"
+        android:name="com.feature.choose_theme.ui.ChooseThemeFragment"
+        android:label="ChooseThemeFragment"
+        tools:layout="@layout/fragment_choose_theme">
+        <deepLink
+            android:id="@+id/deepLink2"
+            app:uri="@string/chooseTheme" />
+    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/loginFragment"-->
+<!--        android:name="com.feature.login.ui.LoginFragment"-->
+<!--        android:label="LoginFragment"-->
+<!--        tools:layout="@layout/fragment_login">-->
+<!--        <deepLink-->
+<!--            android:id="@+id/deepLink4"-->
+<!--            app:uri="@string/login" />-->
+<!--    </fragment>-->
+    <fragment
+        android:id="@+id/boardFragment"
+        android:name="com.feature.board.ui.BoardFragment"
+        android:label="BoardFragment"
+        tools:layout="@layout/fragment_board">
+        <deepLink
+            android:id="@+id/deepLink5"
+            app:uri="@string/board" />
+    </fragment>
+
+</navigation>

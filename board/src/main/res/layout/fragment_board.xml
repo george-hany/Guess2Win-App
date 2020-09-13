@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.feature.board.ui.BoardViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        tools:context=".ui.BoardFragment">
+
+        <LinearLayout
+            android:id="@+id/tabs"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="0dp"
+            android:elevation="@dimen/_3sdp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/matches"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(1)}"
+                android:src="@drawable/ic_ball" />
+
+            <ImageView
+                android:id="@+id/leagues"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(2)}"
+                android:src="@drawable/ic_shield" />
+
+            <ImageView
+                android:id="@+id/rank"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(3)}"
+                android:src="@drawable/ic_rank" />
+
+            <ImageView
+                android:id="@+id/extraPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(4)}"
+                android:src="@drawable/ic_video" />
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(5)}"
+                android:src="@drawable/ic_profile" />
+
+            <ImageView
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(6)}"
+                android:src="@drawable/ic_settings" />
+
+            <ImageView
+                android:id="@+id/prizes"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(7)}"
+                android:src="@drawable/ic_giveaway" />
+
+            <ImageView
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(8)}"
+                android:src="@drawable/ic_help" />
+
+            <ImageView
+                android:id="@+id/contactUs"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(9)}"
+                android:src="@drawable/ic_contact" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.sideBarClicks(10)}"
+                android:src="@drawable/ic_logout" />
+        </LinearLayout>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/Banner_ID"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tabs" />
+
+        <FrameLayout
+            android:id="@+id/nav_host_fragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/adView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tabs"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

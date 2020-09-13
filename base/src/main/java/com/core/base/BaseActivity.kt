@@ -1,9 +1,10 @@
 package com.core.base
 
 import android.annotation.TargetApi
-import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,18 +14,17 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.core.utils.CommonUtils
+import com.ninenox.kotlinlocalemanager.AppCompatActivityBase
 
-abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppCompatActivityBase() {
 
-    private var mProgressDialog: ProgressDialog? = null
+    private var mProgressDialog: CustomProgressDialog = CustomProgressDialog()
     lateinit var viewDataBinding: T
     lateinit var mViewModel: V
 
@@ -70,6 +70,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
             } else {
                 showMessage(it as String)
             }
+            mViewModel.setIsLoading(false)
         })
     }
 
@@ -108,8 +109,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     fun hideLoading() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.cancel()
+        mProgressDialog.dialog?.let {
+            if (it.isShowing) {
+                it.dismiss()
+            }
         }
     }
 
@@ -137,11 +140,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     }
 
     fun showLoading() {
-        hideLoading()
-        mProgressDialog =
-            CommonUtils.showLoadingDialog(this,
-                R.layout.progress_dialog
-            )
+//        hideLoading()
+//        mProgressDialog =
+//            CommonUtils.showCustomLoadingDialog(this)
+        mProgressDialog?.show(this)
     }
 
     fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) =
@@ -164,5 +166,12 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
     private fun initNavigationController() {
         if (controllerId() != 0)
             navigation = Navigation.findNavController(this, controllerId())
+    }
+
+    fun navigateToUriWithClearStack(@StringRes resId: Int, bundle: Bundle = Bundle()) {
+        val intent = Intent()
+        intent.putExtras(bundle)
+        intent.data = Uri.parse(getString(resId))
+        navigation.handleDeepLink(intent)
     }
 }
