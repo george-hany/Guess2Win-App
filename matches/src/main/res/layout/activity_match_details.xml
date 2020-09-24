@@ -52,14 +52,13 @@
                     app:layout_constraintLeft_toRightOf="@id/backArrow"
                     app:layout_constraintTop_toTopOf="@id/top_guideline" />
 
-                <com.google.android.gms.ads.AdView
+                <com.mopub.mobileads.MoPubView
                     android:id="@+id/adView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="@string/Banner_ID"
+                    app:moPubAdSize="height_50"
                     app:layout_constraintEnd_toEndOf="@id/end_guideline"
                     app:layout_constraintStart_toStartOf="@id/start_guideline"
                     app:layout_constraintTop_toBottomOf="@id/backArrow" />
@@ -97,7 +96,7 @@
                     android:text="@string/not_started"
                     android:textColor="@color/matchStatusText"
                     android:textSize="@dimen/_9ssp"
-                    android:visibility="@{viewModel.matchItemUIModel.isMatchStarted()? View.INVISIBLE:View.VISIBLE}"
+                    android:visibility="@{(viewModel.matchItemUIModel.isMatchStarted() || viewModel.matchItemUIModel.isMatchEnded())? View.INVISIBLE:View.VISIBLE}"
                     app:layout_constraintBottom_toTopOf="@+id/matchTime"
                     app:layout_constraintEnd_toEndOf="@id/image2"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -337,7 +336,7 @@
                 android:text="@string/make_an_expectation_to_win_prizes"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="@dimen/_13ssp"
-                android:visibility="@{viewModel.matchItemUIModel.isMatchStarted()? View.INVISIBLE:View.VISIBLE}"
+                android:visibility="@{(viewModel.matchItemUIModel.isMatchStarted() || viewModel.matchItemUIModel.isMatchEnded())? View.INVISIBLE:View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline2"
                 app:layout_constraintStart_toStartOf="@id/start_guideline2"
                 app:layout_constraintTop_toBottomOf="@id/topPart" />
@@ -378,7 +377,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:visibility="@{viewModel.matchItemUIModel.isMatchStarted()? View.GONE:View.VISIBLE}"
+                android:visibility="@{(viewModel.matchItemUIModel.isMatchStarted() || viewModel.matchItemUIModel.isMatchEnded())? View.GONE:View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="@id/start_guideline2"
                 app:layout_constraintTop_toBottomOf="@id/text2" />
 
@@ -388,7 +387,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:visibility="@{viewModel.matchItemUIModel.isMatchStarted()? View.GONE:View.VISIBLE}"
+                android:visibility="@{(viewModel.matchItemUIModel.isMatchStarted() || viewModel.matchItemUIModel.isMatchEnded())? View.GONE:View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="@id/end_guideline2"
                 app:layout_constraintTop_toBottomOf="@id/text2" />
 
@@ -401,7 +400,7 @@
                 android:text="@string/confirm"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_12ssp"
-                android:visibility="@{viewModel.matchItemUIModel.isMatchStarted()? View.GONE:View.VISIBLE}"
+                android:visibility="@{(viewModel.matchItemUIModel.isMatchStarted() || viewModel.matchItemUIModel.isMatchEnded())? View.GONE:View.VISIBLE}"
                 ads:layout_constraintTop_toBottomOf="@id/secondTeamNP"
                 ads:layout_constraintVertical_bias="1"
                 app:layout_constraintBottom_toBottomOf="@id/bottom_guideline2"

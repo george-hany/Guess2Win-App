@@ -28,6 +28,8 @@ class RankRepo(
         object : TypeToken<LoginResponse>() {}.type
     )
 
+    fun getLanguageFromSharedPref() = sharedPreference.getString(SharedPrefKeys.LANGUAGE)
+
     fun requestRanksByMonth(selectedNum: Int): LiveData<List<RankByMonthResponseModel>> {
 //        this.networkFactory.setFileName("ranks_by_month_$selectedNum.json")
         return object : NetworkBoundFileResource<List<RankByMonthResponseModel>>(
@@ -54,53 +56,53 @@ class RankRepo(
         }.asLiveData()
     }
 
-    fun requestMonths(): LiveData<List<MonthResponseModel>> {
-        return object : NetworkBoundFileResource<List<MonthResponseModel>>(
+    fun requestMonths(): LiveData<MonthResponseModel> {
+        return object : NetworkBoundFileResource<MonthResponseModel>(
             networkFactory,
             fileName = "months.json",
             fileManager = fileManager
         ) {
-            override fun convert(json: String): List<MonthResponseModel>? {
+            override fun convert(json: String): MonthResponseModel? {
                 return Gson().fromJson(
                     json,
-                    object : TypeToken<List<MonthResponseModel>>() {}.type
+                    object : TypeToken<MonthResponseModel>() {}.type
                 )
             }
 
-            override suspend fun createCall(): suspend () -> Response<List<MonthResponseModel>> = {
-                    apiFactory.getApisHelper().getMonths().await()
+            override suspend fun createCall(): suspend () -> Response<MonthResponseModel> = {
+                    apiFactory.getApisHelper().getMonths(getLanguageFromSharedPref()).await()
                 }
 
             override fun onFetchFailed(exception: MainExceptions) {
                 exceptionMessage.value = exception.exception
             }
 
-            override fun handleErrorResponseType(response: Response<List<MonthResponseModel>>) {}
+            override fun handleErrorResponseType(response: Response<MonthResponseModel>) {}
         }.asLiveData()
     }
 
-    fun requestWeeks(): LiveData<List<MonthResponseModel>> {
-        return object : NetworkBoundFileResource<List<MonthResponseModel>>(
+    fun requestWeeks(): LiveData<MonthResponseModel> {
+        return object : NetworkBoundFileResource<MonthResponseModel>(
             networkFactory,
-            fileName = "months.json",
+            fileName = "weeks.json",
             fileManager = fileManager
         ) {
-            override fun convert(json: String): List<MonthResponseModel>? {
+            override fun convert(json: String): MonthResponseModel? {
                 return Gson().fromJson(
                     json,
-                    object : TypeToken<List<MonthResponseModel>>() {}.type
+                    object : TypeToken<MonthResponseModel>() {}.type
                 )
             }
 
-            override suspend fun createCall(): suspend () -> Response<List<MonthResponseModel>> = {
-                    apiFactory.getApisHelper().getWeeks().await()
+            override suspend fun createCall(): suspend () -> Response<MonthResponseModel> = {
+                    apiFactory.getApisHelper().getWeeks(getLanguageFromSharedPref()).await()
                 }
 
             override fun onFetchFailed(exception: MainExceptions) {
                 exceptionMessage.value = exception.exception
             }
 
-            override fun handleErrorResponseType(response: Response<List<MonthResponseModel>>) {}
+            override fun handleErrorResponseType(response: Response<MonthResponseModel>) {}
         }.asLiveData()
     }
 
@@ -130,28 +132,28 @@ class RankRepo(
         }.asLiveData()
     }
 
-    fun requestSeasons(): LiveData<List<MonthResponseModel>> {
-        return object : NetworkBoundFileResource<List<MonthResponseModel>>(
+    fun requestSeasons(): LiveData<MonthResponseModel> {
+        return object : NetworkBoundFileResource<MonthResponseModel>(
             networkFactory,
             fileName = "months.json",
             fileManager = fileManager
         ) {
-            override fun convert(json: String): List<MonthResponseModel>? {
+            override fun convert(json: String): MonthResponseModel? {
                 return Gson().fromJson(
                     json,
-                    object : TypeToken<List<MonthResponseModel>>() {}.type
+                    object : TypeToken<MonthResponseModel>() {}.type
                 )
             }
 
-            override suspend fun createCall(): suspend () -> Response<List<MonthResponseModel>> = {
-                    apiFactory.getApisHelper().getSeasons().await()
+            override suspend fun createCall(): suspend () -> Response<MonthResponseModel> = {
+                    apiFactory.getApisHelper().getSeasons(getLanguageFromSharedPref()).await()
                 }
 
             override fun onFetchFailed(exception: MainExceptions) {
                 exceptionMessage.value = exception.exception
             }
 
-            override fun handleErrorResponseType(response: Response<List<MonthResponseModel>>) {}
+            override fun handleErrorResponseType(response: Response<MonthResponseModel>) {}
         }.asLiveData()
     }
 

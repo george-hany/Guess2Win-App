@@ -75,4 +75,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:19.1.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.ninenox.kotlinlocalemanager:kotlin-locale-manager:1.0.0'
+    implementation('com.mopub:mopub-sdk:+@aar') {
+        transitive = true
+    }
 }

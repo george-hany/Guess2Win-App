@@ -59,17 +59,17 @@ interface ApisHelper {
     @GET("OrderByMonths/{selectedNum}")
     fun getRanksByMonth(@Path("selectedNum") selectedNum: Int): Deferred<Response<List<RankByMonthResponseModel>>>
 
-    @GET("Months")
-    fun getMonths(): Deferred<Response<List<MonthResponseModel>>>
+    @GET("Months/GetMonths/{lang}")
+    fun getMonths(@Path("lang") lang: String): Deferred<Response<MonthResponseModel>>
 
-    @GET("Weeks")
-    fun getWeeks(): Deferred<Response<List<MonthResponseModel>>>
+    @GET("Weeks/GetWeeks/{lang}")
+    fun getWeeks(@Path("lang") lang: String): Deferred<Response<MonthResponseModel>>
 
     @GET("OrderByWeeks/{selectedNum}")
     fun getRanksByWeek(@Path("selectedNum") selectedNum: Int): Deferred<Response<List<RankByMonthResponseModel>>>
 
-    @GET("Seasons")
-    fun getSeasons(): Deferred<Response<List<MonthResponseModel>>>
+    @GET("Seasons/GetSeasons/{lang}")
+    fun getSeasons(@Path("lang") lang: String): Deferred<Response<MonthResponseModel>>
 
     @GET("OrderBySeason/{selectedNum}")
     fun getRanksBySeason(@Path("selectedNum") selectedNum: Int): Deferred<Response<List<RankByMonthResponseModel>>>

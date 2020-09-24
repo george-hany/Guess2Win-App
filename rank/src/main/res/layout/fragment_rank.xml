@@ -78,9 +78,120 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     app:adapter="@{adapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/container"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/rank_item" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/greyLight_duskNight"
+                    android:visibility="@{viewModel.userRankItem == null? View.GONE:View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/index"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:text="@{viewModel.userIndex}"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="@dimen/_13ssp"
+                        app:layout_constraintStart_toStartOf="@id/start_guideline2"
+                        app:layout_constraintTop_toTopOf="@id/top_guideline2"
+                        tools:text="1-" />
+
+                    <ImageView
+                        android:id="@+id/image2"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        app:image="@{viewModel.userRankItem.image}"
+                        app:layout_constraintBottom_toBottomOf="@id/bottom_guideline2"
+                        app:layout_constraintStart_toEndOf="@id/index"
+                        app:layout_constraintTop_toTopOf="@id/top_guideline2"
+                        app:layout_constraintVertical_bias="0"
+                        tools:src="@drawable/barca" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@{viewModel.userRankItem.name}"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="@dimen/_11ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/bottom_guideline2"
+                        app:layout_constraintEnd_toStartOf="@id/rank"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintStart_toEndOf="@id/image2"
+                        app:layout_constraintTop_toTopOf="@id/top_guideline2"
+                        tools:text="asdasd" />
+
+                    <TextView
+                        android:id="@+id/rank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:text="@{viewModel.userRankItem.rank}"
+                        android:textColor="@color/darckOrange"
+                        app:layout_constraintBottom_toBottomOf="@id/bottom_guideline2"
+                        app:layout_constraintEnd_toStartOf="@id/text2"
+                        app:layout_constraintStart_toEndOf="@id/name"
+                        app:layout_constraintTop_toTopOf="@id/top_guideline2"
+                        tools:text="45" />
+
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:text="@string/points2"
+                        android:textColor="@color/darckOrange"
+                        app:layout_constraintBottom_toBottomOf="@id/rank"
+                        app:layout_constraintEnd_toEndOf="@id/end_guideline2"
+                        app:layout_constraintTop_toTopOf="@id/rank" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/whiteGrey"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/top_guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="10dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/start_guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="15dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/end_guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="15dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/bottom_guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_end="10dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"

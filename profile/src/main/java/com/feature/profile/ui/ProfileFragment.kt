@@ -100,12 +100,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     fun setUpCCP() {
         dialogBinding.ccpGetFullNumber.run {
-            detectNetworkCountry(true)
-            detectSIMCountry(true)
+//            detectNetworkCountry(true)
+//            detectSIMCountry(true)
             showNameCode(false)
             detectLocaleCountry(true)
+            setCountryForNameCode("eg")
+            setDefaultCountryUsingNameCode("eg")
             registerCarrierNumberEditText(dialogBinding.phoneNumber)
-            fullNumber = profileViewModel.loginResponse.value?.user?.phoneNumber
+            fullNumber = profileViewModel.loginResponse.value?.user?.phoneNumber ?: ""
         }
     }
 

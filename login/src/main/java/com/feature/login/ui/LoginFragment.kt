@@ -14,8 +14,8 @@ import com.facebook.login.LoginResult
 import com.feature.login.BR
 import com.feature.login.R
 import com.feature.login.databinding.FragmentLoginBinding
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.InterstitialAd
+import com.mopub.mobileads.MoPubErrorCode
+import com.mopub.mobileads.MoPubInterstitial
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -24,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoginFragment : BaseActivity<FragmentLoginBinding, LoginViewModel>() {
 
     val loginViewModel: LoginViewModel by viewModel()
-    private lateinit var mInterstitialAd: InterstitialAd
+    private lateinit var mInterstitialAd: MoPubInterstitial
     var showAd = false
     lateinit var callbackManager: CallbackManager
 
@@ -99,7 +99,7 @@ class LoginFragment : BaseActivity<FragmentLoginBinding, LoginViewModel>() {
     private fun loginFinishObserver() {
         loginViewModel.loginFinished.observe(this, Observer {
             if (it) {
-                if (mInterstitialAd.isLoaded && showAd) {
+                if (mInterstitialAd.isReady && showAd) {
                     mInterstitialAd.show()
                 } else {
                     setResult(loginSuccess)
@@ -115,13 +115,31 @@ class LoginFragment : BaseActivity<FragmentLoginBinding, LoginViewModel>() {
 
     private fun setupInterstitialAd() {
         mInterstitialAd = getInterstitialAd(this)
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
+        mInterstitialAd.interstitialAdListener = object : MoPubInterstitial.InterstitialAdListener {
+
+            override fun onInterstitialLoaded(interstitial: MoPubInterstitial?) {}
+
+            override fun onInterstitialFailed(
+                interstitial: MoPubInterstitial?,
+                errorCode: MoPubErrorCode?
+            ) {
+            }
+
+            override fun onInterstitialShown(interstitial: MoPubInterstitial?) {}
+
+            override fun onInterstitialClicked(interstitial: MoPubInterstitial?) {}
+
+            override fun onInterstitialDismissed(interstitial: MoPubInterstitial?) {
                 setResult(loginSuccess)
                 finish()
             }
         }
+        mInterstitialAd.load()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mInterstitialAd.destroy()
     }
 
     override fun controllerId(): Int = 0

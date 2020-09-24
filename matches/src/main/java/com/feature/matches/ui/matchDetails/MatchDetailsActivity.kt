@@ -3,7 +3,6 @@ package com.feature.matches.ui.matchDetails
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.core.base.BaseActivity
-import com.core.utils.CommonUtils
 import com.feature.matches.BR
 import com.feature.matches.R
 import com.feature.matches.databinding.ActivityMatchDetailsBinding
@@ -28,7 +27,8 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
 
     private fun setupAdView() {
         viewDataBinding.adView.run {
-            loadAd(CommonUtils.getAdRequest())
+            setAdUnitId(getString(R.string.Banner_ID))
+            loadAd()
         }
     }
 
@@ -68,6 +68,10 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
                 it?.pridictionNumberGoalsOfTeam1?.toInt() ?: 0
             viewDataBinding.secondTeamNP.value =
                 it?.pridictionNumberGoalsOfTeam2?.toInt() ?: 0
+            matchDetailsViewModel.matchExpectationRequest.run {
+                firstTeamScore = it.pridictionNumberGoalsOfTeam1?.toInt() ?: 0
+                secondTeamScore = it.pridictionNumberGoalsOfTeam2?.toInt() ?: 0
+            }
         })
     }
 
