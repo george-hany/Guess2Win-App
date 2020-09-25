@@ -76,7 +76,7 @@ class MatchesFragment : BaseFragment<FragmentMatchesBinding, MatchesViewModel>()
     private fun selectedDateObserver() {
         matchesViewModel.selectedDate.observe(viewLifecycleOwner, Observer {
             matchesFragmentModel?.run {
-                matchesViewModel.getLeaguesMatchesByDate(it, leagueId ?: "")
+                matchesViewModel.getLeaguesMatchesByDate(getEnglishDate(it), leagueId ?: "")
             } ?: kotlin.run {
                 matchesViewModel.getMatchesByDate(getEnglishDate(it))
             }

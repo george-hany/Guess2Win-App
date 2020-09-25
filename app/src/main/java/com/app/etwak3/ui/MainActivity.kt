@@ -1,16 +1,24 @@
 package com.app.etwak3.ui
 
 import android.content.Intent
-import com.app.etwak3.databinding.ActivityMainBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.app.etwak3.R
-import com.core.base.BaseActivity
+import android.os.Bundle
 import com.app.etwak3.BR
+import com.app.etwak3.R
+import com.app.etwak3.databinding.ActivityMainBinding
+import com.core.base.BaseActivity
 import com.core.utils.AppConstant.loginRequest
 import com.core.utils.AppConstant.loginSuccess
+import com.mopub.common.MoPub
+import com.mopub.common.SdkConfiguration
+import com.mopub.common.SdkInitializationListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     val mainViewModel: MainViewModel by viewModel()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MoPub.initializeSdk(this, getSdkConfiguration(), initSdkListener())
+    }
 
     override fun bindingVariable(): Int {
         return BR.viewModel
@@ -34,4 +42,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             navigateToUriWithClearStack(R.string.board)
         }
     }
+
+    private fun initSdkListener(): SdkInitializationListener? {
+        return SdkInitializationListener { /* MoPub SDK initialized.
+           Check if you should show the consent dialog here, and make your ad requests. */
+        }
+    }
+
+    fun getSdkConfiguration() = SdkConfiguration.Builder(getString(R.string.Banner_ID))
+        .build()
 }

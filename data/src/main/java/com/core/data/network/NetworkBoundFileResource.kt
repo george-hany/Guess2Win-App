@@ -56,7 +56,7 @@ abstract class NetworkBoundFileResource<ResultType : Any>
             if (networkFactory is NetworkFactory) {
                 try {
                     val response =
-                        networkFactory.makeRequest(call = apiResponse, errorMessage = "sadsa")
+                        (networkFactory as NetworkFactory).makeRequest(call = apiResponse, errorMessage = "sadsa")
                     when (response) {
                         is Result.Success -> {
                             if (response.data.code() == 200) {

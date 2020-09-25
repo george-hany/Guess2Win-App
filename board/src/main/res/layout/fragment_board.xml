@@ -73,7 +73,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:onClick="@{()->viewModel.sideBarClicks(6)}"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_settings_unselected" />
 
             <ImageView
                 android:id="@+id/prizes"
@@ -89,7 +89,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:onClick="@{()->viewModel.sideBarClicks(8)}"
-                android:src="@drawable/ic_help" />
+                android:src="@drawable/ic_help_unselected" />
 
             <ImageView
                 android:id="@+id/contactUs"
@@ -108,12 +108,11 @@
                 android:src="@drawable/ic_logout" />
         </LinearLayout>
 
-        <com.google.android.gms.ads.AdView
+        <com.mopub.mobileads.MoPubView
             android:id="@+id/adView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/Banner_ID"
+            app:moPubAdSize="height_50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tabs" />

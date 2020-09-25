@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.core.base.BaseFragment
-import com.core.utils.CommonUtils.getFacebookPageURL
+import com.core.utils.AppConstant.DEVELOPER_URL
+import com.core.utils.AppConstant.FACEBOOK_URL
 import com.feature.contactus.BR
 import com.feature.contactus.R
 import com.feature.contactus.databinding.FragmentContactUsBinding
@@ -25,12 +26,21 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding, ContactUsViewMo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         visitFacebookPageListener()
+        visitDeveloperPageListener()
     }
 
     private fun visitFacebookPageListener() {
         viewDataBinding.visitFacebookPage.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(getFacebookPageURL(requireContext()))
+            intent.data = Uri.parse(FACEBOOK_URL)
+            startActivity(intent)
+        }
+    }
+
+    private fun visitDeveloperPageListener() {
+        viewDataBinding.visitDeveloperPage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(DEVELOPER_URL)
             startActivity(intent)
         }
     }

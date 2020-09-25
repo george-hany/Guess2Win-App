@@ -27,7 +27,8 @@ class LeaguesDetailsActivity :
     }
     private fun setupAdView() {
         viewDataBinding.adView.run {
-            loadAd(CommonUtils.getAdRequest())
+            setAdUnitId(getString(R.string.Banner_ID))
+            loadAd()
         }
     }
     private fun setupViewPager() {

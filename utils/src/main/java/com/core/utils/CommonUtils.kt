@@ -1,5 +1,6 @@
 package com.core.utils
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -8,10 +9,11 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.annotation.LayoutRes
+import com.core.utils.AppConstant.InterstitialId
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.mopub.mobileads.MoPubInterstitial
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -86,7 +88,7 @@ object CommonUtils {
         val DATE_PICKER_YYYY_MM_DD_T_HH_MM_SS_FORMAT =
             SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", getDefault())
         val myDate = DATE_PICKER_YYYY_MM_DD_T_HH_MM_SS_FORMAT.parse(date)
-        val DATE_PICKER_HH_MM_FORMAT = SimpleDateFormat("hh:mm", getDefault())
+        val DATE_PICKER_HH_MM_FORMAT = SimpleDateFormat("hh:mm aa", getDefault())
         return DATE_PICKER_HH_MM_FORMAT.format(myDate)
     }
 
@@ -105,13 +107,8 @@ object CommonUtils {
         }
     }
 
-    fun getInterstitialAd(context: Context): InterstitialAd {
-        val mInterstitialAd = InterstitialAd(context)
-        mInterstitialAd.adUnitId = AppConstant.InterstitialId
-        mInterstitialAd.loadAd(
-            getAdRequest()
-        )
-        return mInterstitialAd
+    fun getInterstitialAd(activity: Activity): MoPubInterstitial {
+        return MoPubInterstitial(activity, InterstitialId)
     }
 
     fun getAdRequest(): AdRequest =

@@ -58,4 +58,7 @@
     <string name="expectation_added_successfully">Expectation added successfully</string>
     <string name="phone_changed_successfully">Phone Changed Successfully</string>
     <string name="league">League</string>
+    <string name="no_prizes_found">no prizes found</string>
+    <string name="no_helps_found">no helps found</string>
+    <string name="developers_team_page">Developers Team Page</string>
 </resources>
