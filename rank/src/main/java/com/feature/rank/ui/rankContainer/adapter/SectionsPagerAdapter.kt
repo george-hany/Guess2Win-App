@@ -12,7 +12,7 @@ import com.feature.rank.ui.rank.model.RankType
 private val TAB_TITLES = arrayOf(
     R.string.week,
     R.string.month,
-    R.string.year
+    R.string.season
 )
 
 /**

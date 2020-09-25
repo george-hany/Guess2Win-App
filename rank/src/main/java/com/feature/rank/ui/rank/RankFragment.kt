@@ -7,7 +7,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.core.base.BaseFragment
 import com.feature.rank.BR
-
 import com.feature.rank.R
 import com.feature.rank.databinding.FragmentRankBinding
 import com.feature.rank.ui.rank.adapter.RanksListAdapter
@@ -49,8 +48,12 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
 
     private fun idsListLiveDataObserver() {
         rankViewModel.run {
-            idsListLiveData.observe(viewLifecycleOwner, Observer {
-                selectedDate.value = "$rankUIType ${it[selectedNum]}"
+            namesListLiveData.observe(viewLifecycleOwner, Observer {
+                if (it.data.isNullOrEmpty()) {
+                    viewDataBinding.swipeRefreshLayout.isRefreshing = false
+                } else {
+                    selectedDate.value = it.data?.get(selectedNum)?.name
+                }
             })
         }
     }
@@ -78,7 +81,26 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>() {
 
     private fun swipeRefreshLayoutListener() {
         viewDataBinding.swipeRefreshLayout.setOnRefreshListener {
-            rankViewModel.selectedDate.value = rankViewModel.selectedDate.value
+            rankViewModel.namesListLiveData.value?.run {
+                if (data.isNullOrEmpty()) {
+                    when (rankType) {
+                        RankType.WEEK -> {
+                            rankViewModel.rankUIType = getString(R.string.week)
+                            rankViewModel.getWeeks()
+                        }
+                        RankType.MONTH -> {
+                            rankViewModel.rankUIType = getString(R.string.month)
+                            rankViewModel.getMonths()
+                        }
+                        RankType.YEAR -> {
+                            rankViewModel.rankUIType = getString(R.string.year)
+                            rankViewModel.getSeasons()
+                        }
+                    }
+                } else {
+                    rankViewModel.selectedDate.value = rankViewModel.selectedDate.value
+                }
+            }
         }
     }
 

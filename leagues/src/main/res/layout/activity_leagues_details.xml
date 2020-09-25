@@ -52,14 +52,13 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.gms.ads.AdView
+                    <com.mopub.mobileads.MoPubView
                         android:id="@+id/adView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_10sdp"
-                        ads:adSize="BANNER"
-                        ads:adUnitId="@string/Banner_ID"
+                        app:moPubAdSize="height_50"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/backArrow" />

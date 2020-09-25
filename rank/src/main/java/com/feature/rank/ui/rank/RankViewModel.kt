@@ -3,6 +3,7 @@ package com.feature.rank.ui.rank
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.core.base.BaseViewModel
+import com.core.data.model.rank.MonthResponseModel
 import com.core.data.repos.RankRepo
 import com.feature.rank.ui.rank.model.RanksItemUIModel
 
@@ -14,64 +15,75 @@ class RankViewModel(var rankRepo: RankRepo) : BaseViewModel<RankRepo>(rankRepo) 
     val rankMediatorLiveData = MediatorLiveData<Any>()
     val ranksUIListLiveData = MutableLiveData<List<RanksItemUIModel>>()
     val userId = rankRepo.getLoginResponseFromSharedPref().user?.id
-    val idsListLiveData = MutableLiveData<List<Int>>()
+    val namesListLiveData = MutableLiveData<MonthResponseModel>()
+    val userRankItem = MutableLiveData<RanksItemUIModel>(null)
+    val userIndex = MutableLiveData<String>(null)
 
     fun getMonths() {
         val requestMonths = rankRepo.requestMonths()
         rankMediatorLiveData.addSource(requestMonths) { list ->
-            idsListLiveData.value = list.map { it.id }
+            namesListLiveData.value = list
         }
     }
 
     fun getRanksByMonth() {
         val requestRanks =
-            rankRepo.requestRanksByMonth(idsListLiveData.value?.get(selectedNum) ?: 0)
+            rankRepo.requestRanksByMonth(namesListLiveData.value?.data?.get(selectedNum)?.id ?: 0)
         rankMediatorLiveData.addSource(requestRanks) { response ->
             ranksUIListLiveData.value =
                 response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
+            userRankItem.value = ranksUIListLiveData.value?.firstOrNull { it.id == userId }
+            userIndex.value =
+                (ranksUIListLiveData.value?.indexOf(userRankItem.value)?.plus(1) ?: -1).toString()
         }
     }
 
     fun getWeeks() {
         val requestMonths = rankRepo.requestWeeks()
         rankMediatorLiveData.addSource(requestMonths) { list ->
-            idsListLiveData.value = list.map { it.id }
+            namesListLiveData.value = list
         }
     }
 
     fun getRanksByWeek() {
         val requestRanks =
-            rankRepo.requestRanksByWeek(idsListLiveData.value?.get(selectedNum) ?: 0)
+            rankRepo.requestRanksByWeek(namesListLiveData.value?.data?.get(selectedNum)?.id ?: 0)
         rankMediatorLiveData.addSource(requestRanks) { response ->
             ranksUIListLiveData.value =
                 response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
+            userRankItem.value = ranksUIListLiveData.value?.firstOrNull { it.id == userId }
+            userIndex.value =
+                (ranksUIListLiveData.value?.indexOf(userRankItem.value)?.plus(1) ?: -1).toString()
         }
     }
 
     fun getSeasons() {
         val requestMonths = rankRepo.requestSeasons()
         rankMediatorLiveData.addSource(requestMonths) { list ->
-            idsListLiveData.value = list.map { it.id }
+            namesListLiveData.value = list
         }
     }
 
     fun getRanksBySeason() {
         val requestRanks =
-            rankRepo.requestRanksBySeason(idsListLiveData.value?.get(selectedNum) ?: 0)
+            rankRepo.requestRanksBySeason(namesListLiveData.value?.data?.get(selectedNum)?.id ?: 0)
         rankMediatorLiveData.addSource(requestRanks) { response ->
             ranksUIListLiveData.value =
                 response?.map { RanksItemUIModel.mapRanksByMonthToUI(it) }
+            userRankItem.value = ranksUIListLiveData.value?.firstOrNull { it.id == userId }
+            userIndex.value =
+                (ranksUIListLiveData.value?.indexOf(userRankItem.value)?.plus(1) ?: -1).toString()
         }
     }
 
     fun onPreviousClick() {
         if (selectedNum > 0) {
-            selectedDate.value = "$rankUIType ${idsListLiveData.value?.get(--selectedNum)}"
+            selectedDate.value = namesListLiveData.value?.data?.get(--selectedNum)?.name
         }
     }
 
     fun onNextClick() {
-        if (selectedNum < idsListLiveData.value?.size!! - 1)
-            selectedDate.value = "$rankUIType ${idsListLiveData.value?.get(++selectedNum)}"
+        if (selectedNum < namesListLiveData.value?.data?.size!! - 1)
+            selectedDate.value = namesListLiveData.value?.data?.get(++selectedNum)?.name
     }
 }

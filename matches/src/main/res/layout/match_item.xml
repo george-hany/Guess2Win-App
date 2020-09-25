@@ -50,7 +50,7 @@
             android:text="@string/not_started"
             android:textColor="@color/matchStatusText"
             android:textSize="@dimen/_9ssp"
-            android:visibility="@{model.isMatchStarted()? View.INVISIBLE:View.VISIBLE}"
+            android:visibility="@{(model.isMatchStarted() || model.isMatchEnded())? View.INVISIBLE:View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/matchTime"
             app:layout_constraintEnd_toEndOf="@id/image2"
             app:layout_constraintHorizontal_bias="0.5"

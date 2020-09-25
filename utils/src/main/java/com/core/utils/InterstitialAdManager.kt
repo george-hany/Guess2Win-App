@@ -1,13 +1,13 @@
 package com.core.utils
 
-import android.content.Context
+import android.app.Activity
 import android.os.Handler
 import com.core.utils.CommonUtils.getInterstitialAd
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.InterstitialAd
+import com.mopub.mobileads.MoPubErrorCode
+import com.mopub.mobileads.MoPubInterstitial
 
-class InterstitialAdManager(var context: Context) {
-    lateinit var interstitialAd: InterstitialAd
+class InterstitialAdManager(var activity: Activity) {
+    lateinit var interstitialAd: MoPubInterstitial
     var isStopped = false
 
     init {
@@ -16,14 +16,26 @@ class InterstitialAdManager(var context: Context) {
     }
 
     private fun setupInterstitialAd() {
-        interstitialAd = getInterstitialAd(context)
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
+        interstitialAd = getInterstitialAd(activity)
+        interstitialAd.interstitialAdListener = object : MoPubInterstitial.InterstitialAdListener {
+            override fun onInterstitialLoaded(interstitial: MoPubInterstitial?) {}
+
+            override fun onInterstitialFailed(
+                interstitial: MoPubInterstitial?,
+                errorCode: MoPubErrorCode?
+            ) {
+            }
+
+            override fun onInterstitialShown(interstitial: MoPubInterstitial?) {}
+
+            override fun onInterstitialClicked(interstitial: MoPubInterstitial?) {}
+
+            override fun onInterstitialDismissed(interstitial: MoPubInterstitial?) {
                 setupInterstitialAd()
                 startInterstitialAd()
             }
         }
+        interstitialAd.load()
     }
 
 //    fun loadInterstitialAd() {
@@ -51,7 +63,7 @@ class InterstitialAdManager(var context: Context) {
     private fun showInterstitialAd() {
         interstitialAd.let {
             if (!isStopped) {
-                if (it.isLoaded) {
+                if (it.isReady) {
                     it.show()
                 } else {
                     setupInterstitialAd()
@@ -62,5 +74,9 @@ class InterstitialAdManager(var context: Context) {
 
     fun stopInterstitialAd() {
         isStopped = true
+    }
+
+    fun destroyAd() {
+        interstitialAd.destroy()
     }
 }
