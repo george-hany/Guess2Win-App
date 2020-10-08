@@ -1,4 +1,4 @@
-package com.app.etwak3
+package com.app.guess2win
 
 import org.junit.Test
 

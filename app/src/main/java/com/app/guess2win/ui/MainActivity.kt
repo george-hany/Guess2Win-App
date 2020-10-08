@@ -1,10 +1,10 @@
-package com.app.etwak3.ui
+package com.app.guess2win.ui
 
 import android.content.Intent
 import android.os.Bundle
-import com.app.etwak3.BR
-import com.app.etwak3.R
-import com.app.etwak3.databinding.ActivityMainBinding
+import com.app.guess2win.BR
+import com.app.guess2win.R
+import com.app.guess2win.databinding.ActivityMainBinding
 import com.core.base.BaseActivity
 import com.core.utils.AppConstant.loginRequest
 import com.core.utils.AppConstant.loginSuccess

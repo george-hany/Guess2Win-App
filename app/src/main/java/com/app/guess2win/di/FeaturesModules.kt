@@ -1,4 +1,4 @@
-package com.app.etwak3.di
+package com.app.guess2win.di
 
 import com.feature.board.di.boardModule
 import com.feature.choose_language.di.chooseLanguageModule
