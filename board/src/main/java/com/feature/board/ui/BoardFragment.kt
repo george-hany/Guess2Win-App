@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.core.base.BaseFragment
 import com.core.utils.AppConstant
 import com.core.utils.AppConstant.ADMOB_APP_ID
+import com.core.utils.CommonUtils
 import com.core.utils.CommonUtils.getInterstitialAd
 import com.core.utils.CommonUtils.getRewardedVideoAd
 import com.core.utils.InterstitialAdManager
@@ -32,16 +33,12 @@ import com.feature.prizes.ui.PrizesFragment
 import com.feature.profile.ui.ProfileFragment
 import com.feature.rank.ui.RankContainerFragment
 import com.feature.settings.ui.SettingsFragment
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.mopub.mobileads.MoPubErrorCode
-import com.mopub.mobileads.MoPubInterstitial
-import com.mopub.mobileads.MoPubRewardedVideos
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
- * A simple [Fragment] subclass.
- */
 class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
     SettingsFragment.CallBack, ExtraPointsFragment.CallBack {
     private val boardViewModel: BoardViewModel by viewModel()
@@ -56,41 +53,32 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
     private var prizesFragment: PrizesFragment? = null
     private var helpFragment: HelpFragment? = null
     private var contactUsFragment: ContactUsFragment? = null
-    private lateinit var mInterstitialAd: MoPubInterstitial
+    private lateinit var mInterstitialAd: InterstitialAd
     private lateinit var interstitialAdManager: InterstitialAdManager
     lateinit var rewardedVideoAd: RewardedVideoAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupInterstitialAd()
         MobileAds.initialize(context, ADMOB_APP_ID)
-        interstitialAdManager = InterstitialAdManager(requireActivity())
+        interstitialAdManager = InterstitialAdManager(requireContext())
         rewardedVideoAd = getRewardedVideoAd(requireContext())
     }
 
     private fun setupInterstitialAd() {
         mInterstitialAd = getInterstitialAd(requireActivity())
-        mInterstitialAd.interstitialAdListener = object : MoPubInterstitial.InterstitialAdListener {
-            override fun onInterstitialLoaded(interstitial: MoPubInterstitial?) {}
-
-            override fun onInterstitialFailed(
-                interstitial: MoPubInterstitial?,
-                errorCode: MoPubErrorCode?
-            ) {
-            }
-
-            override fun onInterstitialShown(interstitial: MoPubInterstitial?) {
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdOpened() {
+                super.onAdOpened()
                 interstitialAdManager.stopInterstitialAd()
             }
 
-            override fun onInterstitialClicked(interstitial: MoPubInterstitial?) {}
-
-            override fun onInterstitialDismissed(interstitial: MoPubInterstitial?) {
+            override fun onAdClosed() {
+                super.onAdClosed()
                 openRankFragment(3)
                 setupInterstitialAd()
                 interstitialAdManager.startInterstitialAd()
             }
         }
-        mInterstitialAd.load()
     }
 
     private lateinit var dialogInfo: Dialog
@@ -109,8 +97,7 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
 
     private fun setupAdView() {
         viewDataBinding.adView.run {
-            setAdUnitId(getString(R.string.Banner_ID))
-            loadAd()
+            loadAd(CommonUtils.getAdRequest())
         }
     }
 
@@ -143,7 +130,7 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
                 }
                 3 -> {
 
-                    if (mInterstitialAd.isReady) {
+                    if (mInterstitialAd.isLoaded) {
                         mInterstitialAd.show()
                     } else {
                         openRankFragment(position)
@@ -157,9 +144,8 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
                     extraPointsFragment?.let {
                         replaceExistFragment(it)
                     } ?: kotlin.run {
-                        MoPubRewardedVideos.loadRewardedVideo(AppConstant.RewarededVideoAd)
                         extraPointsFragment =
-                            ExtraPointsFragment.newInstance(this@BoardFragment)
+                            ExtraPointsFragment.newInstance(this@BoardFragment, rewardedVideoAd)
                         replaceNewFragment(extraPointsFragment!!)
                     }
                 }
@@ -352,8 +338,6 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
         super.onDestroy()
         Log.e("destroyy", "true")
         interstitialAdManager.stopInterstitialAd()
-        interstitialAdManager.destroyAd()
-        mInterstitialAd.destroy()
         matchesFragment?.let {
             matchesFragment = null
         }

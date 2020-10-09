@@ -11,16 +11,15 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.core.base.BaseFragment
-import com.core.utils.AppConstant.RewarededVideoAd
+import com.core.utils.CommonUtils.getRewardedVideoAd
+import com.core.utils.CommonUtils.loadVideo
 import com.feature.extrapoints.BR
 import com.feature.extrapoints.R
 import com.feature.extrapoints.databinding.ConfirmAddPointsBinding
 import com.feature.extrapoints.databinding.FragmentExtraPointsBinding
-import com.mopub.common.MoPub
-import com.mopub.common.MoPubReward
-import com.mopub.mobileads.MoPubErrorCode
-import com.mopub.mobileads.MoPubRewardedVideoListener
-import com.mopub.mobileads.MoPubRewardedVideos
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -28,7 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPointsViewModel>() {
     val extraPointsViewModel: ExtraPointsViewModel by viewModel()
-    private var mRewardedVideoAd: MoPubRewardedVideos? = null
+    private var mRewardedVideoAd: RewardedVideoAd? = null
     var callBack: CallBack? = null
     var completeWatchingAd = false
     private lateinit var dialogInfo: Dialog
@@ -36,7 +35,6 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isSubFragment = true
-        MoPub.onCreate(requireActivity())
         setupRewardedVideoAd()
     }
 
@@ -84,8 +82,8 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
             viewLifecycleOwner,
             Observer {
                 if (it.data == true) {
-                    if (MoPubRewardedVideos.hasRewardedVideo(RewarededVideoAd)) {
-                        MoPubRewardedVideos.showRewardedVideo(RewarededVideoAd)
+                    if (mRewardedVideoAd?.isLoaded!!) {
+                        mRewardedVideoAd?.show()
                     } else
                         showMessage(getString(R.string.video_is_not_ready_try_again_later))
                 } else {
@@ -99,35 +97,38 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     }
 
     private fun setupRewardedVideoAd() {
-        MoPubRewardedVideos.setRewardedVideoListener(object : MoPubRewardedVideoListener {
-            override fun onRewardedVideoLoadSuccess(adUnitId: String) {}
+        mRewardedVideoAd?.run {
+            rewardedVideoAdListener = object : RewardedVideoAdListener {
+                override fun onRewardedVideoAdLoaded() {}
 
-            override fun onRewardedVideoLoadFailure(adUnitId: String, errorCode: MoPubErrorCode) {}
-
-            override fun onRewardedVideoStarted(adUnitId: String) {
-                MoPubRewardedVideos.loadRewardedVideo(RewarededVideoAd)
-                callBack?.onVideoAdOpened()
-            }
-
-            override fun onRewardedVideoPlaybackError(adUnitId: String, errorCode: MoPubErrorCode) {}
-
-            override fun onRewardedVideoClicked(adUnitId: String) {}
-
-            override fun onRewardedVideoClosed(adUnitId: String) {
-                if (completeWatchingAd) {
-                    extraPointsViewModel.confirmWatchingAd()
-                    completeWatchingAd = false
+                override fun onRewardedVideoAdOpened() {
+                    mRewardedVideoAd?.loadVideo()
+                    callBack?.onVideoAdOpened()
                 }
-                callBack?.onVideoAdClosed()
-            }
 
-            override fun onRewardedVideoCompleted(
-                adUnitIds: MutableSet<String>,
-                reward: MoPubReward
-            ) {
-                completeWatchingAd = true
+                override fun onRewardedVideoStarted() {}
+
+                override fun onRewardedVideoAdClosed() {
+                    callBack?.onVideoAdClosed()
+                    if (completeWatchingAd) {
+                        extraPointsViewModel.confirmWatchingAd()
+                        completeWatchingAd = false
+                    }
+                }
+
+                override fun onRewarded(p0: RewardItem?) {}
+
+                override fun onRewardedVideoAdLeftApplication() {}
+
+                override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
+
+                override fun onRewardedVideoCompleted() {
+                    completeWatchingAd = true
+                }
             }
-        })
+        } ?: kotlin.run {
+            mRewardedVideoAd = getRewardedVideoAd(requireContext())
+        }
     }
 
     override fun bindingVariable(): Int = BR.viewModel
@@ -138,30 +139,27 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
 
     override fun onPause() {
         super.onPause()
-        MoPub.onPause(requireActivity())
+        mRewardedVideoAd?.pause(context)
     }
 
     override fun onResume() {
         super.onResume()
-        MoPub.onResume(requireActivity())
+        mRewardedVideoAd?.resume(context)
     }
 
-    override fun onStop() {
-        super.onStop()
-        MoPub.onStop(requireActivity())
-    }
     override fun onDestroy() {
         super.onDestroy()
-        MoPub.onDestroy(requireActivity())
+        mRewardedVideoAd?.destroy(context)
     }
 
     companion object {
-        fun newInstance(callBack: CallBack) =
-            ExtraPointsFragment(callBack)
+        fun newInstance(callBack: CallBack, videoAd: RewardedVideoAd) =
+            ExtraPointsFragment(callBack, videoAd)
     }
 
-    constructor(callBack: CallBack) : this() {
+    constructor(callBack: CallBack, videoAd: RewardedVideoAd) : this() {
         this.callBack = callBack
+        mRewardedVideoAd = videoAd
     }
 
     interface CallBack {

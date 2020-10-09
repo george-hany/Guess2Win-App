@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.feature.board" />
+    package="com.feature.board" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>
