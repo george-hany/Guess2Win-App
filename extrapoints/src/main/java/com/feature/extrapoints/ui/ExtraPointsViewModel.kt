@@ -9,8 +9,8 @@ import com.core.data.repos.ExtraPointsRepo
 class ExtraPointsViewModel(var extraPointsRepo: ExtraPointsRepo) :
     BaseViewModel<ExtraPointsRepo>(extraPointsRepo) {
     val extraPointsMediatorLiveData = MediatorLiveData<Any>()
-    val checkRewardAdAvailabilityLiveData = MutableLiveData<CheckWatchAdAvailabilityResponseModel>()
-    val confirmWatchingRewardAd = MutableLiveData<Boolean>()
+    val checkRewardAdAvailabilityLiveData = MutableLiveData<CheckWatchAdAvailabilityResponseModel?>()
+    val confirmWatchingRewardAd = MutableLiveData<Boolean?>()
 
     fun checkRewardAdAvailability() {
         setIsLoading(true)

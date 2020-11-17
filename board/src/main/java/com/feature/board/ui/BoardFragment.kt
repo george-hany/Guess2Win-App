@@ -341,6 +341,7 @@ class BoardFragment : BaseFragment<FragmentBoardBinding, BoardViewModel>(),
         matchesFragment?.let {
             matchesFragment = null
         }
+        extraPointsFragment = null
     }
 
     override fun onChangeTheme(themeType: String) {

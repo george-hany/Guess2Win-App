@@ -48,9 +48,11 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     }
 
     private fun confirmWatchingRewardAdObserver() {
-        extraPointsViewModel.confirmWatchingRewardAd.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                openConfirmationDialog()
+        extraPointsViewModel.confirmWatchingRewardAd.observe(viewLifecycleOwner, Observer { res ->
+            res?.let {
+                if (it) {
+                    openConfirmationDialog()
+                }
             }
         })
     }
@@ -80,15 +82,18 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     private fun checkRewardAdAvailabilityLiveDataObserver() {
         extraPointsViewModel.checkRewardAdAvailabilityLiveData.observe(
             viewLifecycleOwner,
-            Observer {
-                if (it.data == true) {
-                    if (mRewardedVideoAd?.isLoaded!!) {
-                        mRewardedVideoAd?.show()
-                    } else
-                        showMessage(getString(R.string.video_is_not_ready_try_again_later))
-                } else {
-                    showMessage(getString(R.string.you_can_watch_only_two_videos_per_day_come_back_tomorrow))
+            Observer { res ->
+                res?.let {
+                    if (it.data == true) {
+                        if (mRewardedVideoAd?.isLoaded!!) {
+                            mRewardedVideoAd?.show()
+                        } else
+                            showMessage(getString(R.string.video_is_not_ready_try_again_later))
+                    } else {
+                        showMessage(getString(R.string.you_can_watch_only_two_videos_per_day_come_back_tomorrow))
+                    }
                 }
+
             })
     }
 
@@ -150,6 +155,8 @@ class ExtraPointsFragment() : BaseFragment<FragmentExtraPointsBinding, ExtraPoin
     override fun onDestroy() {
         super.onDestroy()
         mRewardedVideoAd?.destroy(context)
+        extraPointsViewModel.checkRewardAdAvailabilityLiveData.value = null
+        extraPointsViewModel.confirmWatchingRewardAd.value = null
     }
 
     companion object {

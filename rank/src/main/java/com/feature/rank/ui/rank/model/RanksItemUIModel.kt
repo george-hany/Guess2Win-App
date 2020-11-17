@@ -13,7 +13,7 @@ class RanksItemUIModel(var id: String?, var name: String?, var image: String?, v
 
         fun mapRanksByMonthToUI(model: RankByMonthResponseModel): RanksItemUIModel {
             model.run {
-                return RanksItemUIModel(user?.id, user?.userName, user?.image, score)
+                return RanksItemUIModel(user?.id, user?.displayName, user?.image, score)
             }
         }
     }
