@@ -46,19 +46,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:fontFamily="@font/open_sans_bold"
-                    android:text="Etwk3"
+                    android:text="Guess2Win"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintLeft_toRightOf="@id/backArrow"
                     app:layout_constraintTop_toTopOf="@id/top_guideline" />
 
-                <com.mopub.mobileads.MoPubView
+                <com.google.android.gms.ads.AdView
                     android:id="@+id/adView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:moPubAdSize="height_50"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/Banner_ID"
                     app:layout_constraintEnd_toEndOf="@id/end_guideline"
                     app:layout_constraintStart_toStartOf="@id/start_guideline"
                     app:layout_constraintTop_toBottomOf="@id/backArrow" />

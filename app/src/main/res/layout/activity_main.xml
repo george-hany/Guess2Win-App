@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.app.etwak3.ui.MainViewModel" />
+            type="com.app.guess2win.ui.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.app.etwak3.com.app.etwak3.ui.MainActivity">
+        tools:context="com.app.guess2win.com.app.etwak3.ui.MainActivity">
 
         <fragment
             android:id="@+id/mainController"

@@ -1,6 +1,5 @@
 package com.core.utils
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.pm.PackageManager
@@ -11,9 +10,9 @@ import android.graphics.drawable.ColorDrawable
 import androidx.annotation.LayoutRes
 import com.core.utils.AppConstant.InterstitialId
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.mopub.mobileads.MoPubInterstitial
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -107,19 +106,28 @@ object CommonUtils {
         }
     }
 
-    fun getInterstitialAd(activity: Activity): MoPubInterstitial {
-        return MoPubInterstitial(activity, InterstitialId)
+    fun getInterstitialAd(context: Context): InterstitialAd {
+        val mInterstitialAd = InterstitialAd(context)
+        mInterstitialAd.adUnitId = InterstitialId
+        mInterstitialAd.loadAd(
+            getAdRequest()
+        )
+        return mInterstitialAd
     }
 
     fun getAdRequest(): AdRequest =
-        AdRequest.Builder().build()
+        AdRequest.Builder().addTestDevice("E30A665A4AA4D5D5C491A7A2F51A0BFE").build()
 
     fun getRewardedVideoAd(context: Context): RewardedVideoAd {
         val mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context)
-        mRewardedVideoAd.loadAd(
+        mRewardedVideoAd.loadVideo()
+        return mRewardedVideoAd
+    }
+
+    fun RewardedVideoAd.loadVideo() {
+        loadAd(
             AppConstant.RewarededVideoAd,
             getAdRequest()
         )
-        return mRewardedVideoAd
     }
 }

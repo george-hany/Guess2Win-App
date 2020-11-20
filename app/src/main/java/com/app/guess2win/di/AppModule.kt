@@ -1,9 +1,9 @@
-package com.app.etwak3.di
+package com.app.guess2win.di
 
-import com.app.etwak3.BuildConfig
+import com.app.guess2win.BuildConfig
 import com.core.data.constant.AppConstant.Companion.DATABASE_NAME_KEY
 import com.core.data.constant.AppConstant.Companion.PREF_NAME_KEY
-import com.app.etwak3.ui.MainViewModel
+import com.app.guess2win.ui.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

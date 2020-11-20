@@ -6,7 +6,7 @@ class RankItemUIModel(var id: String?, var name: String?, var image: String?, va
     companion object {
         fun mapResponseToUI(model: LeaguesRankResponseModel): RankItemUIModel {
             model.run {
-                return RankItemUIModel(user?.id, user?.userName, user?.image, score)
+                return RankItemUIModel(user?.id, user?.displayName, user?.image, score)
             }
         }
 

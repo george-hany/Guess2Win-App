@@ -1,4 +1,4 @@
-package com.app.etwak3
+package com.app.guess2win
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
