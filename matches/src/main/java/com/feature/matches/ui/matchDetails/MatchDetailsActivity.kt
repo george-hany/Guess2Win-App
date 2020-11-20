@@ -3,6 +3,7 @@ package com.feature.matches.ui.matchDetails
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.core.base.BaseActivity
+import com.core.utils.CommonUtils.getAdRequest
 import com.feature.matches.BR
 import com.feature.matches.R
 import com.feature.matches.databinding.ActivityMatchDetailsBinding
@@ -27,8 +28,7 @@ class MatchDetailsActivity : BaseActivity<ActivityMatchDetailsBinding, MatchDeta
 
     private fun setupAdView() {
         viewDataBinding.adView.run {
-            setAdUnitId(getString(R.string.Banner_ID))
-            loadAd()
+            loadAd(getAdRequest())
         }
     }
 

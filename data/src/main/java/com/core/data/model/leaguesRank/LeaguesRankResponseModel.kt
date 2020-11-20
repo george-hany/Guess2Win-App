@@ -35,6 +35,7 @@ data class LeaguesRankResponseModel(
         var phoneNumberConfirmed: Boolean? = null,
         var securityStamp: String? = null,
         var twoFactorEnabled: Boolean? = null,
-        var userName: String? = null
+        var userName: String? = null,
+        var displayName: String? = null
     )
 }

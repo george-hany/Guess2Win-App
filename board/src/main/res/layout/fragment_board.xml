@@ -108,11 +108,12 @@
                 android:src="@drawable/ic_logout" />
         </LinearLayout>
 
-        <com.mopub.mobileads.MoPubView
+        <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:moPubAdSize="height_50"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/Banner_ID"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tabs" />

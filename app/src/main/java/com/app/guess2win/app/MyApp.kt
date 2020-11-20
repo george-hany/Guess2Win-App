@@ -1,7 +1,7 @@
-package com.app.etwak3.app
+package com.app.guess2win.app
 
-import com.app.etwak3.di.allFeatures
-import com.app.etwak3.di.appModule
+import com.app.guess2win.di.allFeatures
+import com.app.guess2win.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import com.core.data.di.dataSourceModules

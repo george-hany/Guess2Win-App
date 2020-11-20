@@ -5,6 +5,7 @@ import android.util.LayoutDirection
 import android.view.View
 import com.core.base.BaseActivity
 import com.core.utils.CommonUtils
+import com.core.utils.CommonUtils.getAdRequest
 import com.feature.leagues.BR
 import com.feature.leagues.R
 import com.feature.leagues.databinding.ActivityLeaguesDetailsBinding
@@ -25,12 +26,13 @@ class LeaguesDetailsActivity :
         backArrowListener()
         setupAdView()
     }
+
     private fun setupAdView() {
         viewDataBinding.adView.run {
-            setAdUnitId(getString(R.string.Banner_ID))
-            loadAd()
+            loadAd(getAdRequest())
         }
     }
+
     private fun setupViewPager() {
         val sectionsPagerAdapter =
             SectionsPagerAdapter(this, supportFragmentManager, leagueItemUIModel?.id ?: "")

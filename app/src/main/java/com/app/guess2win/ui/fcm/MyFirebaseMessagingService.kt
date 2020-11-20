@@ -1,9 +1,9 @@
-package com.app.etwak3.ui.fcm
+package com.app.guess2win.ui.fcm
 
 import android.content.Intent
 import android.util.Log
-import com.app.etwak3.R
-import com.app.etwak3.ui.MainActivity
+import com.app.guess2win.R
+import com.app.guess2win.ui.MainActivity
 import com.core.data.constant.SharedPrefKeys.Companion.NOTIFICATION_STATUS
 import com.core.data.model.fcm.NotificationModel
 import com.core.data.model.fcm.PushNotificationModelResponse

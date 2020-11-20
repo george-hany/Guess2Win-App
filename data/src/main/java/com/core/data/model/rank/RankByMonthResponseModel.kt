@@ -59,6 +59,8 @@ data class RankByMonthResponseModel(
         @SerializedName("twoFactorEnabled")
         var twoFactorEnabled: Boolean? = null,
         @SerializedName("userName")
-        var userName: String? = null
+        var userName: String? = null,
+        @SerializedName("displayName")
+        var displayName: String? = null
     )
 }
